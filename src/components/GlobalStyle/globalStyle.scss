@@ -1,0 +1,44 @@
+
+
+$mobile:480px;
+$table : 786px;
+$desktop :1024px; 
+@mixin mobile {
+    @media(max-width: #{$mobile}) {
+        @content;
+    }
+}
+@mixin table {
+    @media(min-width: #{$table}) and (max-width:#{$desktop}) {
+        @content;
+    }
+}
+.nav-link {
+    color:white !important;
+}
+body{
+    background-color: #151515 !important;
+    color:#fff !important;
+}
+// .carousel-indicators {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     list-style: none;
+//     padding: 0;
+//     margin: 0;
+//   }
+  
+//   .carousel-indicators li {
+//     width: 10px;
+//     height: 10px;
+//     background-color: #fff;
+//     border-radius: 100%;
+//     margin-right: 5px; 
+//     cursor: pointer;
+//     transition: background-color 0.3s ease;
+//   }
+  
+//   .carousel-indicators .active {
+//     background-color: #007bff; /* Màu nền của điểm đang được chọn */
+//   }

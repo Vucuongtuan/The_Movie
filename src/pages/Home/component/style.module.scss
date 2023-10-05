@@ -1,0 +1,134 @@
+@import '../../../components/GlobalStyle/globalStyle.scss';
+
+.Introduction {
+    width: 100%;
+position: relative;
+
+@include mobile{
+    height:580px;
+}
+
+    .slide-show{
+        max-height:110vh;
+        min-height: 500px;
+       
+        .box-slide{
+            position: relative;
+        &::before{
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%; 
+            background: 
+            linear-gradient(
+                to top,
+                 rgba(0, 0, 0, 0.8) 50%,
+                  rgba(0, 0, 0, 0) 100%
+                  );
+            z-index: 1;
+        }
+        .title-new-movie{
+            position: absolute;
+            bottom:0;
+            height:100%;
+            width: 80%;
+            z-index: 9;
+            display: flex;
+            justify-content:start;
+@include mobile {
+    width: 100%;
+}
+@include table {
+    width: 90%;
+                
+}
+
+            .name-movie{
+                position: absolute;
+                bottom:200px;
+                left:30px;
+height:50%;
+width: 80%;
+color:white; 
+font-size: 16px;
+display: flex;
+
+@include mobile {
+    width: 90%;
+height:60%;
+bottom:30px;
+}
+@include table {
+    bottom:120px;
+left:50px;
+  }
+.poster-image{
+    height: 100%;
+    width: 35%;
+    display: flex;justify-content: center;align-items: center;
+    img{
+        height:95%;
+        width: 85%;
+border-radius: 6px;
+
+    }
+    @include mobile {
+        display: none;
+      }
+    @include table {
+      display: none;
+    }
+}
+.overview{
+width: 60%;
+@include mobile {
+    width: 90%;
+}
+.overview-movie{
+font-size: 0.8em;
+min-height: 80px;
+@include mobile {
+font-size: 0.7em;
+}
+}
+h1{
+    font-size: 3.7em;
+    min-height: 40px;
+    @include mobile {
+        font-size: 1.5em;
+    }
+    @include table {
+        font-size: 1.8em;
+
+                    
+    }
+}
+        }
+        }}
+            .box-image{
+                height:100%;
+                width: 100%;
+                min-height: 500px;
+                filter: brightness(45%);
+
+            }
+
+            .btn-ct{
+                height:3em;
+                font-weight: 600;
+                font-size: 1em;
+                border-radius:6px;
+                width: 8em;
+                background-color: red;
+
+                @include mobile {
+                    height:2.5em;
+
+                }
+                
+            }
+        }
+    }
+}
