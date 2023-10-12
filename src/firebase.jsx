@@ -3,14 +3,14 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import firebase from 'firebase/app';
+import 'firebase/auth'
 import 'firebase/database'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.REACT_API_KEY,
+  apiKey: 'AIzaSyAKBQOylmZ7gCc7UML61GG5-cH_CUu6f5I',
   authDomain: "api-project-1c3a7.firebaseapp.com",
   projectId: "api-project-1c3a7",
   storageBucket: "api-project-1c3a7.appspot.com",
@@ -23,4 +23,6 @@ const app = initializeApp(firebaseConfig);
 
 // Get a reference to the database
 const db = getDatabase(app);
-export {db}
+const auth = getAuth(app);
+
+export { db, auth };

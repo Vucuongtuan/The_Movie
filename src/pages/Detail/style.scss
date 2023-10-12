@@ -1,0 +1,70 @@
+@import '../../components/GlobalStyle/globalStyle.scss';
+.hero_back::before {
+  position: absolute;
+  inset: 0;
+  background-color: #333;
+}
+.hero {
+  position: relative;
+  width: 100%;
+  .content-hero {
+    position: absolute;
+    justify-content: center;
+    right: 0;
+    left: 0;
+    top: 250px;
+    width: 90%;
+    margin: auto;
+
+    @include table {
+      width: 90%;
+      margin: auto;
+      flex-direction: column;
+    }
+    @include mobile {
+      width: 90%;
+      margin: auto;
+      font-size: 1em;
+      flex-direction: column;
+    }
+    .content-hero-gr {
+      width: 30%;
+      @include table {
+        width: 100%;
+      }
+      @include mobile {
+        width: 100%;
+      }
+      .hero-image {
+        @include table {
+          width: 100%;
+          margin-bottom: 20px;
+        }
+        @include mobile {
+          width: 100%;
+          margin-bottom: 20px;
+        }
+      }
+    }
+    .detail_hero_title {
+      margin-left: 3%;
+      display: flex;
+      justify-content: start;
+      align-items: end;
+      height: auto;
+      width: 68%;
+      @include mobile {
+        width: 100%;
+        margin-top: 80px;
+        margin-left: 0;
+        justify-content: center;
+        align-items: center;
+      }
+      @include table {
+        margin-top: 80px;
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+  }
+}

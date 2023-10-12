@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
-import { getPopulerMovie } from "../../../components/services/UserService";
+import { getTrendingMovie } from "../../../services/UserService";
 import styles from './style.module.scss'
 import classNames from 'classnames/bind';
-import StarIcon from '@mui/icons-material/Star';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 const cx = classNames.bind(styles)
 function MovieNew() {
     const [newMovie,setNewMovie] = useState([])
@@ -22,7 +20,7 @@ return ()=> window.removeEventListener("resize",handleResize)
 },[])
 const ApiKey = async () => {
  try {
-   let res = await getPopulerMovie()
+   let res = await getTrendingMovie()
    setNewMovie(res.data.results);
  } catch (error) {
    console.error(error);
@@ -42,9 +40,9 @@ const ApiKey = async () => {
               </div>
               <div className={cx('overview')}>
                 <h1 style={{color:'white'}}>{item.original_title}</h1>
-                <p>Rankting :{' '}{item.vote_average} {''} <StarIcon style={{fontSize:'1em' ,marginTop:'-2px'}}/>
+                <p>Rankting :{' '}{item.vote_average} {''} 
                 </p>
-                <p>Vote : {item.vote_count} {' '} <ThumbUpIcon style={{fontSize:'1em' ,marginTop:'-2px'}}/></p>
+                <p>Vote : {item.vote_count} {' '} </p>
                 <p className={cx('overview-movie')}>{item.overview}</p>
                 <button className={cx('btn-ct')}>Xem chi tiết</button>
                 </div></div>

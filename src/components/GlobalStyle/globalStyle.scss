@@ -1,24 +1,53 @@
+@import 'react-loading-skeleton/dist/skeleton.css';
+@import 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css';
+@import 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css';
 
-
-$mobile:480px;
-$table : 786px;
-$desktop :1024px; 
+$mobile: 250px;
+$table: 786px;
+$desktop: 1024px;
 @mixin mobile {
-    @media(max-width: #{$mobile}) {
-        @content;
-    }
+  @media (min-width: #{$mobile}) and (max-width:#{$table}) {
+    @content;
+  }
 }
 @mixin table {
-    @media(min-width: #{$table}) and (max-width:#{$desktop}) {
-        @content;
-    }
+  @media (min-width: #{$table}) and (max-width:#{$desktop}) {
+    @content;
+  }
 }
 .nav-link {
-    color:white !important;
+  color: white !important;
 }
-body{
-    background-color: #151515 !important;
-    color:#fff !important;
+body {
+  background-color: #151515 !important;
+  color: #fff !important;
+}
+.border_bottom_red::before {
+  content: '';
+  position: absolute;
+  border-bottom: 3px solid red;
+  bottom: -6px;
+  left: 0;
+  height: 1px;
+  width: 10%;
+  display: inline-block;
+}
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-track {
+  background-color: darkgrey;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: red;
+  border-radius: 10px;
+}
+body {
+  scrollbar-width: thin;
+}
+body {
+  scrollbar-color: #6969dd#e0e0e0;
+  scrollbar-width: thin;
 }
 // .carousel-indicators {
 //     display: flex;
@@ -28,17 +57,17 @@ body{
 //     padding: 0;
 //     margin: 0;
 //   }
-  
+
 //   .carousel-indicators li {
 //     width: 10px;
 //     height: 10px;
 //     background-color: #fff;
 //     border-radius: 100%;
-//     margin-right: 5px; 
+//     margin-right: 5px;
 //     cursor: pointer;
 //     transition: background-color 0.3s ease;
 //   }
-  
+
 //   .carousel-indicators .active {
 //     background-color: #007bff; /* Màu nền của điểm đang được chọn */
 //   }

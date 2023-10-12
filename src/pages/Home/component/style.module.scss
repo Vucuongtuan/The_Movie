@@ -6,14 +6,25 @@ position: relative;
 
 @include mobile{
     height:580px;
+}@include table{
+    height:580px;
 }
 
     .slide-show{
         max-height:110vh;
         min-height: 500px;
-       
+        @include table{
+            height:580px;
+        }
+        @include mobile{
+            height:580px;
+        }
         .box-slide{
             position: relative;
+            @include table{
+            height:580px;
+
+            }
         &::before{
             content: "";
             position: absolute;
@@ -69,7 +80,7 @@ left:50px;
     width: 35%;
     display: flex;justify-content: center;align-items: center;
     img{
-        height:95%;
+        height:100%;
         width: 85%;
 border-radius: 6px;
 
@@ -78,7 +89,6 @@ border-radius: 6px;
         display: none;
       }
     @include table {
-      display: none;
     }
 }
 .overview{
@@ -124,10 +134,11 @@ h1{
                 background-color: red;
 
                 @include mobile {
-                    height:2.5em;
-
+                    height:2.2em;
                 }
-                
+                @include table {
+                    height:2.5em;
+                }
             }
         }
     }
