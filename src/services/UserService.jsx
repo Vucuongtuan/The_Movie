@@ -156,6 +156,9 @@ const getTrailerMovie = async (id) => {
 const getImageMovie = async (id) => {
   return apibase.get(`/3/movie/${id}/images?api_key=${apikeyMovie}`);
 };
+const getSimilarMovie = async (id) => {
+  return apibase.get(`/3/movie/${id}/similar?api_key=${apikeyMovie}`);
+};
 //export api firebase
 export {
   getDataUser,
@@ -176,6 +179,7 @@ export {
   getCastMovie,
   getTrailerMovie,
   getImageMovie,
+  getSimilarMovie,
 };
 // const ApiUserService = (page) =>{
 //     return axios.get(`/api/users?page=${page}`)

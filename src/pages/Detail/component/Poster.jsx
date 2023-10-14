@@ -22,8 +22,8 @@ function Poster() {
     setOpenImage(!openImage);
     setSelectImage(url);
   };
+
   const urlImage = 'https://image.tmdb.org/t/p/original';
-  console.log(poster);
   return (
     <div className='w-full h-[600px] grid grid-cols-5 grid-rows-4 gap-3'>
       {poster.slice(0, 15).map((item, index) => (
@@ -43,9 +43,9 @@ function Poster() {
           onHide={handleOpenImage}
           aria-labelledby='contained-modal-title-vcenter'
           centered
+          className='bg-[hsla(0,0%,6%,0)]'
         >
-          <Modal.Header closeButton></Modal.Header>
-          <Modal.Body>
+          <Modal.Body className='bg-[rgb(40,40,40)]'>
             <img src={`${urlImage}${selectImage}`} alt='' />
           </Modal.Body>
         </Modal>

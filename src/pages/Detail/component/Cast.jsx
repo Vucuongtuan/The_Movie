@@ -8,6 +8,8 @@ function Cast({ dataCasts, visibleCasts }) {
     slidesToScroll: 3,
     initialSlide: 0,
   };
+  console.log('Cast render=>>');
+
   return (
     <div
       className='flex  h-[240px] w-[80%] space-x-8 overflow-hidden

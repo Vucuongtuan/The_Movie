@@ -1,11 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { getCastMovie, getDetailMovie } from '../../services/UserService';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import './style.scss';
 import { Container } from 'react-bootstrap';
 import { HeroDetail } from './component';
 import PreViewMovie from './component/PreViewMovie';
 import Poster from './component/Poster';
+import Similar from './component/Similar';
 
 function DetailMovie() {
   const { id } = useParams();
@@ -13,18 +14,18 @@ function DetailMovie() {
   const [dataCasts, setDataCasts] = useState([]);
   const [visibleCasts] = useState(10);
   useEffect(() => {
+    const getDetail = async () => {
+      let res = await getDetailMovie(id);
+      setDataDetail([res.data]);
+    };
+    const getCasts = async () => {
+      let resCasts = await getCastMovie(id);
+      const casts = resCasts.data.cast;
+      setDataCasts(casts);
+    };
     getDetail();
     getCasts();
   }, [id]);
-  const getDetail = async () => {
-    let res = await getDetailMovie(id);
-    setDataDetail([res.data]);
-  };
-  const getCasts = async () => {
-    let resCasts = await getCastMovie(id);
-    const casts = resCasts.data.cast;
-    setDataCasts(casts);
-  };
 
   return (
     <div className='h-auto bg-[rgb(6,6,6)]'>
@@ -48,9 +49,10 @@ function DetailMovie() {
           <h3 className='mb-8'>Poster</h3>
           <Poster />
         </Container>
+        <Similar />
       </div>
     </div>
   );
 }
 
-export default DetailMovie;
+export default memo(DetailMovie);
