@@ -11,12 +11,13 @@ export function PreViewMovie() {
   const [nav2, setNav2] = useState(null);
   const [dataTrailer, setDataTrailer] = useState([]);
   useEffect(() => {
+    const getTraiLer = async () => {
+      let res = await getTrailerMovie(id);
+      setDataTrailer(res.data.results);
+    };
     getTraiLer();
-  }, [getTraiLer]);
-  const getTraiLer = async () => {
-    let res = await getTrailerMovie(id);
-    setDataTrailer(res.data.results);
-  };
+  }, [id]);
+
   let slider1, slider2;
   useEffect(() => {
     setNav1(slider1);

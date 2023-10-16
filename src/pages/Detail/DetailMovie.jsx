@@ -37,7 +37,7 @@ function DetailMovie() {
         />
       </div>
       <div
-        className='h-[2000px]'
+        className='h-[2200px]'
         style={{
           backgroundImage: `
         linear-gradient(to bottom, rgb(10 10 10) 20%, rgb(0 0 0 / 6%) 100%)`,
@@ -49,6 +49,7 @@ function DetailMovie() {
           <h3 className='mb-8'>Poster</h3>
           <Poster />
         </Container>
+        <h3 className='ml-[30px]'>Có lên quan</h3>
         <Similar />
       </div>
     </div>

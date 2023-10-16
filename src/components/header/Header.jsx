@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Navbar, Form, Button } from 'react-bootstrap';
+import { Navbar, Form, Button, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Login } from '../../pages';
 import './style.scss';
 
 export default function Header() {
   const [navColor, setNavColor] = useState('transparent');
-  const [showOffcanvas, setShowOffCanvas] = useState(false);
-  const setData = localStorage.data;
-  const handleClose = () => {
-    setShowOffCanvas(!showOffcanvas);
-  };
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 400) {
@@ -46,20 +41,11 @@ export default function Header() {
                   placeholder='  Search ...'
                 />
               </Form>
-              {setData && (
-                <>
-                  <Button
-                    onClick={handleClose}
-                    className=' btn-system d-inline mx-2 bg-slate-600 border-0'
-                  >
-                    System
-                  </Button>
-                  <Login
-                    handleClose={handleClose}
-                    showOffcanvas={showOffcanvas}
-                  />
-                </>
-              )}
+              <Nav.Link as={Link} to='/login'>
+                <Button className=' btn-system d-inline mx-2 bg-slate-600 border-0'>
+                  Login
+                </Button>
+              </Nav.Link>
             </div>
           </Navbar.Collapse>
         </div>
