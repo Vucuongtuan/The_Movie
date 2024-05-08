@@ -1,33 +1,62 @@
-import React, { useEffect, useState } from 'react';
 import { getMovie } from '../../../services/movie.api';
+import { useQuery } from '@tanstack/react-query';
+
 import { Link } from 'react-router-dom';
 import CardGrid from '../../../components/CardGrid';
 import SkeletonElement from '../../../components/Skeleton/Skeleton';
+export default function MovieList() {
+  // useEffect(() => {
+  //   ApiKey();
+  // }, []);
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setWidthScreen(window.innerWidth);
+  //   };
+  //   window.addEventListener('resize', handleResize);
 
-export default function MovieCartoon() {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const getData = async () => {
-      setIsLoading(true);
-      try {
-        const res = await getMovie(1, '', 2024, 'hoat-hinh');
-        setData(res);
-      } catch (err) {
-        setIsLoading(false);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getData();
-  }, []);
-  console.log(data);
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, []);
+  // const ApiKey = async () => {
+  //   try {
+  //     let res = await getTrendingMovie();
+  //     setNewMovie(res.data.results);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const { data, isFetching } = useQuery({
+    queryKey: ['/danh-sach/phim-moi-cap-nhat'],
+    queryFn: async () => await getMovie(1, '', 2024, 'phim-moi-cap-nhat'),
+  });
+
+  // if (data.status === false) {
+  //   return (
+  //     <div className='h-[600px] w-full justify-center items-center flex'>
+  //       <svg
+  //         xmlns='http://www.w3.org/2000/svg'
+  //         fill='none'
+  //         viewBox='0 0 24 24'
+  //         strokeWidth={1.5}
+  //         stroke='currentColor'
+  //         className='w-16 h-16 text-red-400'
+  //       >
+  //         <path
+  //           strokeLinecap='round'
+  //           strokeLinejoin='round'
+  //           d='M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z'
+  //         />
+  //       </svg>
+  //     </div>
+  //   );
+  // }
+  // const newData = data.items.slice(0, 12);
   return (
     <section className='mt-8'>
       <div className='flex justify-between items-center'>
-        <h2>Phim Hoạt hình</h2>
+        <h2>Phim mới cập nhật</h2>
         <Link
-          to={'/danh-sach/hoat-hinh'}
+          to={'/danh-sach/phim-moi-cap-nhat'}
           className='flex mr-2 py-1 px-4  rounded-md border border-white  text-neutarl-700 text-sm hover:shadow-[4px_4px_0px_0px_rgba(255,255,255)] transition duration-200'
         >
           <svg
@@ -49,21 +78,24 @@ export default function MovieCartoon() {
       </div>
       <div
         className='mt-8 mb-8  w-full min-h-[300px] h-[500px] gap-2 grid grid-cols-5 grid-rows-2 
-    lg:h-[350px]
-  md:grid-cols-2
-  md:grid-rows-5
-  md:h-auto
-  '
+        lg:h-[350px]
+        md:h-auto
+        md:max-h-[1800px]
+      md:grid-cols-2
+      md:grid-rows-5
+      '
       >
-        {isLoading
-          ? Array.from({ length: data?.items?.length }).map((_, index) => (
-              <SkeletonElement
-                key={index}
-                className={`rounded-md overflow-hidden relative group cursor-pointer`}
-              />
-            ))
+        {isFetching
+          ? Array.from({ length: data?.data?.items?.length }).map(
+              (_, index) => (
+                <SkeletonElement
+                  key={index}
+                  className={`rounded-md overflow-hidden relative group cursor-pointer`}
+                />
+              ),
+            )
           : data &&
-            data?.data?.items
+            data.data.items
               .slice(0, 10)
               .map((movie, index) => <CardGrid movie={movie} index={index} />)}
       </div>

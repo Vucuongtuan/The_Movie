@@ -1,58 +1,119 @@
-import { useParams } from 'react-router-dom';
-import { getCastMovie, getDetailMovie } from '../../services/UserService';
+import { Link, useParams } from 'react-router-dom';
 import { memo, useEffect, useState } from 'react';
 import './style.scss';
-import { Container } from 'react-bootstrap';
 import { HeroDetail } from './component';
-import PreViewMovie from './component/PreViewMovie';
-import Poster from './component/Poster';
-import Similar from './component/Similar';
+import { getDetailMovie, getDetailMovie1 } from '../../services/movie.api';
+import ErrorPage from '../Error';
+import LoadingElement from '../../components/LoadingElement';
 
 function DetailMovie() {
-  const { id } = useParams();
+  const { slug } = useParams();
+
   const [dataDetail, setDataDetail] = useState([]);
-  const [dataCasts, setDataCasts] = useState([]);
-  const [visibleCasts] = useState(10);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
   useEffect(() => {
     const getDetail = async () => {
-      let res = await getDetailMovie(id);
-      setDataDetail([res.data]);
-    };
-    const getCasts = async () => {
-      let resCasts = await getCastMovie(id);
-      const casts = resCasts.data.cast;
-      setDataCasts(casts);
+      try {
+        const res = await getDetailMovie(slug);
+        setDataDetail(res);
+      } catch (err) {
+        setIsLoading(false);
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
     };
     getDetail();
-    getCasts();
-  }, [id]);
+  }, [slug]);
 
+  // if (isLoading) {
+  //   return <LoadingElement />;
+  // }
+  if (isError) {
+    return <ErrorPage />;
+  }
+  console.log(dataDetail?.data?.data.item);
   return (
-    <div className='h-auto bg-[rgb(6,6,6)]'>
-      <div className='h-[800px] relative bg-[rgb(6,6,6)]'>
-        <HeroDetail
-          dataDetail={dataDetail}
-          dataCasts={dataCasts}
-          visibleCasts={visibleCasts}
-        />
+    <>
+      {' '}
+      <div className=' bg-[#040404]'>
+        {isLoading ? (
+          <LoadingElement />
+        ) : (
+          <>
+            <HeroDetail dataDetail={dataDetail?.data?.data.item} />
+            <div className='m-auto px-[8rem] 2xl:px-[5rem] xl:px-[4rem] lg:px-[3rem] md:px-[1rem] '>
+              <section className='h-auto py-4 bg-[#040404]  '>
+                <h2 className='py-2'>Danh sách tập</h2>
+                <div className='mt-1 h-auto flex flex-wrap '>
+                  {dataDetail?.data?.data.item.episodes[0]?.server_data[0]
+                    .slug === 'full'
+                    ? dataDetail?.data?.data.item.episodes[0]?.server_data.map(
+                        (movie) => (
+                          <Link
+                            key={movie.name}
+                            to={`/movie/${dataDetail?.data?.data.item.movie?.slug}/full`}
+                            className={`no-underline my-1 mx-1 rounded-md py-1 px-3 border-1 hover:bg-slate-100 hover:text-black font-medium transform transition duration-200 hover:shadow-md  ${
+                              movie.slug === '1' ? `mr-1` : ` mx-1`
+                            }`}
+                          >
+                            {movie.name}
+                          </Link>
+                        ),
+                      )
+                    : dataDetail?.data?.data.item.episodes[0]?.server_data[0]
+                        .slug === ''
+                    ? dataDetail?.data?.data.item.episodes[0]?.server_data.map(
+                        (movie) => (
+                          <Link
+                            key={movie.name}
+                            to={`/movie/${dataDetail?.data?.data.item.movie?.slug}/trailer`}
+                            className={`no-underline my-1 mx-1 rounded-md py-1 px-3 border-1 hover:bg-slate-100 hover:text-black font-medium transform transition duration-200 hover:shadow-md  
+                            `}
+                          >
+                            Trailer
+                          </Link>
+                        ),
+                      )
+                    : dataDetail?.data?.data.item.episodes[0]?.server_data.map(
+                        (movie) => (
+                          <Link
+                            key={movie.name}
+                            to={`/movie/${dataDetail?.data?.data.item?.slug}/tap-${movie.slug}`}
+                            className={`no-underline my-1 mx-1 rounded-md py-1 px-3 border-1 hover:bg-slate-100 hover:text-black font-medium transform transition duration-200 hover:shadow-md  ${
+                              movie.slug === '1' ? `mr-1` : ` mx-1`
+                            }`}
+                          >
+                            Tập {movie.name}
+                          </Link>
+                        ),
+                      )}
+                </div>
+              </section>
+              <section className='w-full h-auto mb-2 ' id='trailer'>
+                <h3 className='text-2xl'>Trailer</h3>
+                <iframe
+                  src={dataDetail?.data?.data.item.trailer_url
+                    .replace(
+                      'https://www.youtube.com',
+                      'https://www.youtube.com/embed',
+                    )
+                    .replace('/watch?v=', '/')}
+                  title={dataDetail?.data?.seoOnPage?.titleHead}
+                  frameborder='0'
+                  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                  referrerpolicy='strict-origin-when-cross-origin'
+                  allowfullscreen
+                  className='w-full h-[600px] rounded-md'
+                ></iframe>
+              </section>
+            </div>
+          </>
+        )}
       </div>
-      <div
-        className='h-[2200px]'
-        style={{
-          backgroundImage: `
-        linear-gradient(to bottom, rgb(10 10 10) 20%, rgb(0 0 0 / 6%) 100%)`,
-        }}
-      >
-        <Container className='mt-24'>
-          <PreViewMovie id='preview' />
-          <h3 className='mt-24 mb-24'>Movie</h3>
-          <h3 className='mb-8'>Poster</h3>
-          <Poster />
-        </Container>
-        <h3 className='ml-[30px]'>Có lên quan</h3>
-        <Similar />
-      </div>
-    </div>
+    </>
   );
 }
 

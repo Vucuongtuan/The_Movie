@@ -6,13 +6,17 @@
   height: 40vmin;
   pointer-events: none;
 }
-
+a {
+  color: white !important;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.color_nav div p {
+  color: white !important;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

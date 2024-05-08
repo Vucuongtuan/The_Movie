@@ -1,113 +1,121 @@
-import Cast from './Cast';
 import '../style.scss';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-function HeroDetail({ dataDetail, dataCasts, visibleCasts }) {
-  const { id } = useParams();
-  const [overViewEnglish, setOverViewEnglish] = useState('');
-  useEffect(() => {
-    getOverEnglish();
-  });
-  const getOverEnglish = async () => {
-    const apiKey = 'e9e9d8da18ae29fc430845952232787c';
-    const axiosUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`;
-    axios.get(axiosUrl).then((res) => {
-      setOverViewEnglish(res.data.overview);
-    });
-  };
+import Image from '../../../components/imageComponent/image';
 
+function HeroDetail({ dataDetail }) {
+  const [resizeWidth, setResizeWidth] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) setResizeWidth(true);
+      else setResizeWidth(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [resizeWidth]);
+  console.log(dataDetail);
+  const handleClickScroll = (trailer) => {
+    const element = document.getElementById(trailer);
+    if (element) {
+      // 👇 Will scroll smoothly to the top of the next section
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
     <>
-      {dataDetail.map((item) => (
-        <div key={item.id} className=' hero'>
-          <div
-            className=' h-[800px] w-full flex bg-center brightness-[.6] '
-            style={{
-              backgroundImage: `
-              linear-gradient(to top, rgb(10 10 10) 20%, rgb(0 0 0 / 6%) 100%),
-              url('https://image.tmdb.org/t/p/original${item.backdrop_path}')`,
-              backgroundSize: 'cover',
-            }}
-          ></div>
-          <div className='content-hero flex'>
-            <div className='content-hero-gr h-full  flex justify-center items-end'>
-              <div
-                className='hero-image h-[700px] w-[500px] ml-[60px] relative 
-              md:ml-[0px] md:h-[500px] md:w-[350px]
-              sm:ml-0 sm:h-[400px] sm:w-[270px]
-              '
-              >
-                <img
-                  src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
-                  alt=''
-                  className='h-full w-full rounded-md '
-                />
-                <a href='#preview' className='text-white '>
-                  <button className='w-full h-[50px] bg-red-600 mt-2 rounded-md'>
-                    Xem
-                  </button>
-                </a>
-                <div className='absolute top-2 right-5'>
-                  <svg
-                    className='w-[60px] h-[60px]'
-                    style={{ strokeWidth: ' 3.8' }}
-                  >
-                    <path
-                      d='M28 2.0845 a 26.9155 26.9155 0 1 1 0 53.831 a 26.9155 26.9155 0 1 1 0 -53.831'
-                      strokeDasharray={`${item.vote_average * 15}, 100`}
-                      fill='none'
-                      stroke='#444'
-                      strokeWidth='5'
-                      className='stroke-green-600'
-                    />
-                    <text
-                      x='50%'
-                      y='50%'
-                      textAnchor='middle'
-                      dy='.3em'
-                      className='text-white'
-                      fill='white'
-                    >
-                      {item.vote_average}
-                    </text>
-                  </svg>
-                </div>
-              </div>
-            </div>
+      <div
+        key={dataDetail?._id}
+        className=' relative flex bg-[#040404] xl:bg-[] lg:flex-col-reverse md:flex-col-reverse '
+      >
+        <div className='  items-end h-full w-[40%] flex px-8 lg:w-full md:w-full md:px-2 lg:z-30 lg:absolute lg:bg-transparent lg:bottom-3 md:z-30 md:absolute md:bg-transparent md:bottom-4'>
+          <div className='mt-36 w-full '>
+            <div className='p-2 w-full '></div>
             <div
-              className='detail_hero_title 
-             
+              className='w-full px-2 md:w-full md:text-[0.7rem]
+            
             '
             >
-              <div className='h-[600px] flex flex-col w-full'>
-                <h1>{item.title}</h1>
-                <span className='mt-[-10px] mb-[15px] text-[rgb(115,128,149)]'>
-                  {item.original_title}
+              <h1 className='font-cursive text-4xl  py-2 md:text-2xl'>
+                {dataDetail?.name}
+              </h1>
+              <span className=''>{dataDetail?.origin_name}</span>
+              <div className='w-full h-auto mt-1 '>
+                <span className='w-[45px] border-r border-r-red pr-2'>
+                  {dataDetail?.episode_current}
                 </span>
-                <div className='flex mb-2'>
-                  <span className='mr-2'>Thể loại : {'   '}</span>
-                  <span>
-                    {item.genres.map((gen) => gen.name).join('  ,  ')}
-                  </span>
-                </div>
-
-                <div className='mt-2 w-[95%] md:w-full'>
-                  <h5>Overview</h5>
-                  <span>{item.overview || overViewEnglish}</span>
-                </div>
-                <div className='mt-3'>
-                  <h5 className='border_bottom_red relative mb-4'>
-                    Diễn viên chính
-                  </h5>
-
-                  <Cast visibleCasts={visibleCasts} dataCasts={dataCasts} />
-                </div>
+                <span className='w-[45px] border-r border-r-red px-2'>
+                  {dataDetail?.time}
+                </span>
+                <span className='w-[45px] border-r border-r-red  px-2'>
+                  {dataDetail?.type}
+                </span>
+                <span className='w-[45px]  px-2'>{dataDetail?.year}</span>
+              </div>
+              <div className='mt-1 flex flex-col '>
+                <span>Sub : {dataDetail?.lang} </span>
+                <span>
+                  Thể loại :{' '}
+                  {dataDetail?.category &&
+                    dataDetail?.category
+                      .map((cate) => cate.name)
+                      .join(', ')}{' '}
+                </span>
+                <span>
+                  Đạo diễn :{' '}
+                  {dataDetail?.director &&
+                    dataDetail?.director
+                      .map((director) => director)
+                      .join(', ')}{' '}
+                </span>
+                <span>
+                  Diễn viên :{' '}
+                  {dataDetail?.actor &&
+                    dataDetail?.actor.map((actor) => actor).join(', ')}{' '}
+                </span>
+              </div>
+              <div
+                className='mt-2'
+                dangerouslySetInnerHTML={{
+                  __html: dataDetail?.content,
+                }}
+              ></div>
+              <div className='mt-2  md:-mt-5'>
+                {dataDetail?.episode_current === 'Trailer' ? (
+                  <Link
+                    onClick={() => handleClickScroll('trailer')}
+                    className='w-[200px] py-3 px-12 no-underline bg-red-600 rounded-md'
+                  >
+                    Trailer
+                  </Link>
+                ) : dataDetail?.episodes[0].server_data[0].slug === 'full' ? (
+                  <Link
+                    to={`/movie/${dataDetail?.slug}/full`}
+                    className='w-[200px] py-3 px-12 no-underline bg-red-600 rounded-md'
+                  >
+                    Xem phim
+                  </Link>
+                ) : (
+                  <Link
+                    to={`/movie/${dataDetail?.slug}/tap-1`}
+                    className='w-[200px] py-3 px-12 no-underline bg-red-600 rounded-md'
+                  >
+                    Xem phim
+                  </Link>
+                )}
               </div>
             </div>
           </div>
         </div>
-      ))}
+        <div className=' h-full w-[60%] flex bg-center brightness-[.6] img-bg  lg:w-full md:w-full'>
+          <Image
+            resizeLayout={resizeWidth}
+            movie={dataDetail}
+            className={'h-[90vh] w-full object-cover lg:h-full md:h-full'}
+          />
+        </div>
+      </div>
     </>
   );
 }

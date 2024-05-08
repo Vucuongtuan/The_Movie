@@ -1,91 +1,135 @@
 import React, { useEffect, useState } from 'react';
-import { Navbar, Form, Button, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import './style.scss';
+import { Menu, MenuItem } from '../ui/navbar-menu';
+import {
+  getListOptionNation,
+  getListOptionTheLoai,
+} from '../../services/movie.api';
 
-export default function Header() {
-  const [navColor, setNavColor] = useState('transparent');
+import SearchMovie from './searchMovie';
+import { Drawer } from 'flowbite-react';
 
+export default function Header({ className }) {
+  const [navColor, setNavColor] = useState(false);
+  const [active, setActive] = useState(null);
+  const [theloai, setTheLoai] = useState([]);
+  const [country, setCountry] = useState([]);
+  const [isViewMovie, setIsViewMovie] = useState(false);
+  const { pathname } = useLocation();
+  // const { name } = useParams();
+
+  useEffect(() => {
+    if (
+      pathname.includes('/movie/') ||
+      pathname.includes('/danh-sach/') ||
+      pathname.includes('/the-loai/') ||
+      pathname.includes('/quoc-gia/')
+    ) {
+      setIsViewMovie(true);
+    } else {
+      setIsViewMovie(false);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    const getList = async () => {
+      const [theloai, country] = await Promise.all([
+        getListOptionTheLoai(),
+        getListOptionNation(),
+      ]);
+      console.log(theloai.data.data.items);
+      setTheLoai(theloai.data.data.items);
+      setCountry(country.data.data.items);
+    };
+    getList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 400) {
-        setNavColor('rgb(32,33,36)');
+        setNavColor(true);
       } else {
-        setNavColor('transparent');
+        setNavColor(false);
       }
     };
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [navColor]);
+
   return (
-    <>
-      <Navbar
-        style={{ backgroundColor: `${navColor}`, transition: '1s' }}
-        className={`w-full  fixed top-0 right-0 z-50 ${
-          window.scrollY >= 400 ? `bg-[rgb(32, 33, 36)]` : `bg-transparent`
-        } `}
-      >
-        <div className={`navbar-container flex justify-between m-auto `}>
-          <Navbar.Brand as={Link} to='/' style={{ color: '#fff' }}>
-            The Movie
-          </Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse className='justify-content-end '>
-            <div className='header-right  flex justify-between '>
-              <Form className='form-search mr-5 w-[80%] '>
-                <input
-                  type='text'
-                  className='search1 border-b-[1px] border-b-slate-300 outline-0 h-full  bg-transparent '
-                  placeholder='  Search ...'
-                />
-              </Form>
-              <Nav.Link as={Link} to='/login'>
-                <Button className=' btn-system d-inline mx-2 bg-slate-600 border-0'>
-                  Login
-                </Button>
-              </Nav.Link>
+    <header
+      className={`  top-0 flex transition-all  duration-500 inset-x-0 w-full h-[64px] leading-[64px] 
+         mx-auto z-40
+         ${
+           isViewMovie
+             ? 'bg-black sticky mb-2'
+             : navColor
+             ? 'bg-black sticky mb-2'
+             : 'fixed bg-transparent'
+         }
+         `}
+      style={
+        navColor
+          ? { backgroundColor: '#0a0c0f' }
+          : { backgroundColor: 'transparent' }
+      }
+    >
+      <div className='w-2/3 flex pl-16 text-white '>
+        <Link to={'/'} className='px-8'>
+          <img src='/logoTC-BG.png' alt='' className='h-full w-full' />
+          <h1 className='hidden'>TC Phim</h1>
+        </Link>
+
+        <Menu setActive={setActive}>
+          <Link to={'/danh-sach/phim-bo'}>Phim bộ</Link>
+          <Link to={'/danh-sach/phim-le'}>Phim lẻ</Link>
+          <Link to={'/danh-sach/hoat-hinh'}>Hoạt hình</Link>
+          <MenuItem setActive={setActive} active={active} item='Quốc gia '>
+            <div className='grid grid-cols-6 gap-2  text-sm '>
+              {country &&
+                country.map((item) => (
+                  <Link
+                    key={item._id}
+                    as={Link}
+                    to={'/quoc-gia/' + item.slug}
+                    className='overflow-hidden hover:bg-slate-100 hover:text-black hover:font-semibold hover:rounded-md py-2 px-2'
+                  >
+                    {item.name}
+                  </Link>
+                ))}
             </div>
-          </Navbar.Collapse>
-        </div>
-      </Navbar>
-      {/* <Navbar
-      key='md'
-      expand='md'
-      style={{backgroundColor:`${navColor}`,transition:'1s'}}
-      className="w-full color-w fixed top-0 right-0 z-50 "
-      >
-        <div className='w-[80%] m-auto flex justify-between'>
-          <Navbar.Brand href="#" style={{color:'#fff'}}>The Movie</Navbar.Brand>
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-md`} />
-              <Nav className="justify-content-end flex-grow-1 pe-3">
-              <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto" activeKey={location.pathname}>
-              <Nav.Link as={Link} to="/">Home</Nav.Link>
-              <Nav.Link as={Link} to="/contact">Quản lý</Nav.Link>
-            </Nav>
-              <Form className="d-flex">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2 bg-transparent placeholder-white  text-white"
-                  aria-label="Search"
-                />
-              </Form>
-              <Button 
-              onClick={handleClose}
-              className="d-inline mx-2 bg-slate-600 border-0"
-              >
-                System
-              </Button>
-              <Login
-              showOffcanvas={showOffcanvas}
-              />
-          </Navbar.Collapse>
-              </Nav>
-        </div>
-      </Navbar> */}
-    </>
+          </MenuItem>
+          <MenuItem setActive={setActive} active={active} item='Thể loại'>
+            <div className='  text-sm grid grid-cols-4 gap-6 p-4 overflow-hidden'>
+              {theloai &&
+                theloai.map((item) => (
+                  <Link
+                    key={item._id}
+                    as={Link}
+                    to={'/the-loai/' + item.slug}
+                    className='overflow-hidden hover:bg-slate-100 hover:text-black hover:font-semibold hover:rounded-md py-2 px-2'
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+            </div>
+          </MenuItem>
+          {/* <MenuItem setActive={setActive} active={active} item='Hoạt hình'>
+            <div className='flex flex-col space-y-4 text-sm'>
+              <HoveredLink href='/hobby'>Hobby</HoveredLink>
+              <HoveredLink href='/individual'>Individual</HoveredLink>
+              <HoveredLink href='/team'>Team</HoveredLink>
+              <HoveredLink href='/enterprise'>Enterprise</HoveredLink>
+            </div>
+          </MenuItem> */}
+        </Menu>
+      </div>
+      <div className='w-1/3'>
+        <SearchMovie />
+      </div>
+    </header>
   );
 }

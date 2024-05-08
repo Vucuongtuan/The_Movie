@@ -1,145 +1,176 @@
 @import '../../../components/GlobalStyle/globalStyle.scss';
 
 .Introduction {
-    width: 100%;
-position: relative;
-
-@include mobile{
-    height:580px;
-}@include table{
-    height:580px;
-}
-
-    .slide-show{
-        max-height:110vh;
-        min-height: 500px;
-        @include table{
-            height:580px;
-        }
-        @include mobile{
-            height:580px;
-        }
-        .box-slide{
-            position: relative;
-            @include table{
-            height:580px;
-
-            }
-        &::before{
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 30%; 
-            background: 
-            linear-gradient(
-                to top,
-                 rgba(0, 0, 0, 0.8) 50%,
-                  rgba(0, 0, 0, 0) 100%
-                  );
-            z-index: 1;
-        }
-        .title-new-movie{
-            position: absolute;
-            bottom:0;
-            height:100%;
-            width: 80%;
-            z-index: 9;
-            display: flex;
-            justify-content:start;
-@include mobile {
-    width: 100%;
-}
-@include table {
-    width: 90%;
-                
-}
-
-            .name-movie{
-                position: absolute;
-                bottom:200px;
-                left:30px;
-height:50%;
-width: 80%;
-color:white; 
-font-size: 16px;
-display: flex;
-
-@include mobile {
-    width: 90%;
-height:60%;
-bottom:30px;
-}
-@include table {
-    bottom:120px;
-left:50px;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  .carousel-control-next {
+    justify-content: end;
+    background-color: red !important;
   }
-.poster-image{
-    height: 100%;
-    width: 35%;
-    display: flex;justify-content: center;align-items: center;
-    img{
-        height:100%;
-        width: 85%;
-border-radius: 6px;
+  @include mobile {
+    height: 600px;
+  }
+  @include table {
+    height: 600px;
+  }
 
+  .slide-show {
+    max-height: 100vh;
+    min-height: 600px;
+
+    @include table {
+      height: 600px;
     }
     @include mobile {
-        display: none;
+      height: 600px;
+    }
+    .box-slide {
+      position: relative;
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 30%;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.8) 50%,
+          rgba(0, 0, 0, 0) 100%
+        );
+        z-index: 1;
       }
-    @include table {
-    }
-}
-.overview{
-width: 60%;
-@include mobile {
-    width: 90%;
-}
-.overview-movie{
-font-size: 0.8em;
-min-height: 80px;
-@include mobile {
-font-size: 0.7em;
-}
-}
-h1{
-    font-size: 3.7em;
-    min-height: 40px;
-    @include mobile {
-        font-size: 1.5em;
-    }
-    @include table {
-        font-size: 1.8em;
 
-                    
-    }
-}
+      .title-new-movie {
+        position: absolute;
+        bottom: 70px;
+        height: 100%;
+        width: 80%;
+        z-index: 9;
+        display: flex;
+        justify-content: start;
+        @include mobile {
+          width: 100%;
+          height: 70%;
+          min-height: 40%;
         }
-        }}
-            .box-image{
-                height:100%;
-                width: 100%;
-                min-height: 500px;
-                filter: brightness(45%);
-
-            }
-
-            .btn-ct{
-                height:3em;
-                font-weight: 600;
-                font-size: 1em;
-                border-radius:6px;
-                width: 8em;
-                background-color: red;
-
-                @include mobile {
-                    height:2.2em;
-                }
-                @include table {
-                    height:2.5em;
-                }
-            }
+        @include table {
+          width: 90%;
+          height: 100%;
         }
+        .name-movie {
+          position: absolute;
+          bottom: 8rem;
+          left: 30px;
+          height: 50%;
+          width: 80%;
+          color: white;
+          font-size: 16px;
+          display: flex;
+
+          @include mobile {
+            width: 90%;
+            height: 50%;
+            bottom: 80px;
+          }
+          @include table {
+            bottom: 2rem;
+            left: 50px;
+          }
+          .poster-image {
+            height: 100%;
+            width: 35%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+              height: 100%;
+              width: 85%;
+              border-radius: 6px;
+            }
+            @include mobile {
+              display: none;
+            }
+            @include table {
+            }
+          }
+          .overview {
+            width: 60%;
+            @include mobile {
+              width: 90%;
+            }
+            .overview-movie {
+              height: 100px;
+              max-height: 150px;
+              overflow: hidden;
+              font-size: 0.8em;
+              min-height: 80px;
+              @include mobile {
+                font-size: 0.7em;
+              }
+            }
+            h1 {
+              font-size: 3.7em;
+              min-height: 40px;
+              @include mobile {
+                font-size: 1.5em;
+              }
+              @include table {
+                font-size: 1.8em;
+              }
+            }
+          }
+        }
+      }
+      .box-image {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        filter: brightness(45%);
+      }
+
+      .btn-ct {
+        height: 3em;
+        font-weight: 600;
+        font-size: 1em;
+        border-radius: 6px;
+        width: 8em;
+        bottom: 0px;
+        position: absolute;
+        background-color: red;
+        @include mobile {
+          height: 2.2em;
+          position: inherit;
+        }
+        @include table {
+          height: 2.5em;
+          bottom: 15px;
+          position: absolute;
+        }
+      }
     }
+  }
+}
+.swiper {
+  width: 100vh;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
