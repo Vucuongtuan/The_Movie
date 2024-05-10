@@ -143,9 +143,15 @@ export default function Header({ className }) {
         </Link>
 
         <Menu setActive={setActive}>
-          <Link to={'/danh-sach/phim-bo'}>Phim bộ</Link>
-          <Link to={'/danh-sach/phim-le'}>Phim lẻ</Link>
-          <Link to={'/danh-sach/hoat-hinh'}>Hoạt hình</Link>
+          <Link to={'/danh-sach/phim-bo'} className='mr-4'>
+            Phim bộ
+          </Link>
+          <Link to={'/danh-sach/phim-le'} className='mr-4'>
+            Phim lẻ
+          </Link>
+          <Link to={'/danh-sach/hoat-hinh'} className='mr-4'>
+            Hoạt hình
+          </Link>
           <MenuItem setActive={setActive} active={active} item='Quốc gia '>
             <div className='grid grid-cols-6 gap-2  text-sm '>
               {country &&

@@ -21,21 +21,24 @@ export default function ViewMovie() {
       setIsLoading(true);
       try {
         const res = await getDetailMovie(name);
-
-        setDataMovie(res?.data);
-        const tapp = parseInt(slug.split('-')[1]?.trim());
-        let link;
         const serverData = res?.data.data?.item?.episodes[0]?.server_data;
+        let link;
+        setDataMovie(res?.data);
 
-        if (serverData) {
-          for (let i = 0; i < serverData.length; i++) {
-            if (parseInt(serverData[i].slug) === tapp) {
-              link = serverData[i];
-              break; // Dừng vòng lặp khi tìm thấy phần tử thích hợp
+        if (slug === 'full') {
+          link = serverData[0];
+        } else {
+          const tapp = parseInt(slug.split('-')[1]?.trim());
+          if (serverData) {
+            for (let i = 0; i < serverData.length; i++) {
+              if (parseInt(serverData[i].slug) === tapp) {
+                link = serverData[i];
+                break;
+              }
             }
           }
         }
-        console.log(link.link_embed);
+        console.log(link);
         setLinkMovie([link.link_embed, 'link_embed']);
       } catch (err) {
         console.log(err);
@@ -75,7 +78,7 @@ export default function ViewMovie() {
   }
   return (
     <main className=' m-auto mb-4 px-[8rem] 2xl:px-[5rem] xl:px-[4rem] lg:px-[3rem] md:px-[1rem]'>
-      <Breadcrumb aria-label='Default breadcrumb example'>
+      <Breadcrumb aria-label='Default breadcrumb example' className='py-2'>
         <Breadcrumb.Item>
           <Link to={'/'} className='no-underline'>
             Trang chủ
@@ -169,7 +172,7 @@ export default function ViewMovie() {
                       ? movieSlug === slug
                         ? 'bg-red-600 mr-1'
                         : 'mx-1'
-                      : movieSlug === slug
+                      : 'full' === slug
                       ? 'bg-red-600 mr-1'
                       : 'mx-1'
                   }`}
