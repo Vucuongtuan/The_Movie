@@ -90,7 +90,7 @@ export default function MovieList() {
               (_, index) => (
                 <SkeletonElement
                   key={index}
-                  className={`rounded-md overflow-hidden relative group cursor-pointer`}
+                  className={`rounded-md w-full h-full overflow-hidden relative group cursor-pointer`}
                 />
               ),
             )

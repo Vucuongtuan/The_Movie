@@ -27,7 +27,6 @@ function MovieNew() {
       console.error(error);
     }
   };
-
   return (
     <Carousel
       className={cx('Introduction')}
