@@ -9,6 +9,7 @@ import {
 
 import SearchMovie from './searchMovie';
 import { Drawer, Sidebar } from 'flowbite-react';
+import { Accordion } from 'flowbite-react';
 
 export default function Header({ className }) {
   const [navColor, setNavColor] = useState(false);
@@ -32,6 +33,7 @@ export default function Header({ className }) {
     } else {
       setIsViewMovie(false);
     }
+    setIsOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -82,35 +84,79 @@ export default function Header({ className }) {
           </svg>
         </button>
       </div>
-      <Drawer open={isOpen} onClose={handleClose}>
+      <Drawer open={isOpen} onClose={handleClose} className='bg-[#1e1e1e] '>
         <Drawer.Header title='Drawer' />
         <Drawer.Items>
           <Sidebar
-            aria-label='Sidebar with multi-level dropdown example'
+            aria-label='Sidebar with multi-level dropdown example '
             className='[&>div]:bg-transparent [&>div]:p-0'
           >
             <Sidebar.Items>
               <Sidebar.ItemGroup>
-                <Sidebar.Item as={Link} to={'/danh-sach/phim-bo'}>
+                <Sidebar.Item
+                  as={Link}
+                  to={'/danh-sach/phim-bo'}
+                  className='text-white hover:text-black'
+                >
                   Phim bộ
                 </Sidebar.Item>
-                <Sidebar.Item as={Link} to={'/danh-sach/phim-le'}>
+                <Sidebar.Item
+                  as={Link}
+                  to={'/danh-sach/phim-le'}
+                  className='text-white hover:text-black'
+                >
                   Phim lẻ
                 </Sidebar.Item>
-                <Sidebar.Item as={Link} to={'/danh-sach/hoat-hinh'}>
+                <Sidebar.Item
+                  as={Link}
+                  to={'/danh-sach/hoat-hinh'}
+                  className='text-white hover:text-black'
+                >
                   Hoạt hình
                 </Sidebar.Item>
-              </Sidebar.ItemGroup>
-              <Sidebar.ItemGroup>
-                <Sidebar.Item href='https://github.com/themesberg/flowbite-react/'>
-                  Docs
-                </Sidebar.Item>
-                <Sidebar.Item href='https://flowbite-react.com/'>
-                  Components
-                </Sidebar.Item>
-                <Sidebar.Item href='https://github.com/themesberg/flowbite-react/issues'>
-                  Help
-                </Sidebar.Item>
+                <Accordion>
+                  <Accordion.Panel>
+                    <Accordion.Title className='h-[40px] text-white  hover:text-black focus:text-white dark:bg-red-500'>
+                      Thể loại
+                    </Accordion.Title>
+                    <Accordion.Content>
+                      <div className='  text-sm grid grid-cols-2 gap-1 px-1'>
+                        {theloai &&
+                          theloai.map((item) => (
+                            <Link
+                              key={item._id}
+                              as={Link}
+                              to={'/the-loai/' + item.slug}
+                              className='overflow-hidden hover:bg-slate-100 hover:text-black hover:font-semibold hover:rounded-md py-2 px-2'
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                      </div>
+                    </Accordion.Content>
+                  </Accordion.Panel>
+
+                  <Accordion.Panel>
+                    <Accordion.Title className='h-[40px] text-white   hover:text-black focus:text-white dark:bg-red-500'>
+                      Quốc gia
+                    </Accordion.Title>
+                    <Accordion.Content>
+                      <div className='  text-sm grid grid-cols-2 gap-1 px-1'>
+                        {country &&
+                          country.map((item) => (
+                            <Link
+                              key={item._id}
+                              as={Link}
+                              to={'/quoc-gia/' + item.slug}
+                              className='overflow-hidden hover:bg-slate-100 hover:text-black hover:font-semibold hover:rounded-md py-2 px-2'
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                      </div>
+                    </Accordion.Content>
+                  </Accordion.Panel>
+                </Accordion>
               </Sidebar.ItemGroup>
             </Sidebar.Items>
           </Sidebar>
@@ -192,11 +238,11 @@ export default function Header({ className }) {
           </MenuItem> */}
         </Menu>
       </div>
-      <div className='w-[40%] md:w-[60%] lg:w-[70%]  flex'>
-        <div className='w-2/3'>
+      <div className='w-[40%] md:w-[60%] lg:w-[70%]  flex justify-between'>
+        <div className='flex-grow'>
           <SearchMovie />
         </div>
-        <div className='h-full w-1/3 py-1  flex justify-end'>
+        <div className='h-full w-[35px]  py-1  flex justify-end '>
           {drawerMovile()}
           {/* <button
             className='w-8 h-8 text-center mx-2 px-1 rounded-full  bg-yellow-400'

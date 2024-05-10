@@ -100,32 +100,34 @@ export default function ListMovie() {
   if (isFetching) {
     return <LoadingElement />;
   }
-  console.log(isFetching);
-  console.log(isLoading);
+
   return (
     <>
       <main className='m-auto px-[8rem] 2xl:px-[5rem] xl:px-[4rem] lg:px-[3rem] md:px-[1rem]  md:pt-2'>
         <section className='w-full pb-1 flex flex-wrap mb-2 '>
-          <div className='w-[200px]  pr-2 md:w-full '>
-            <label className='w-full' htmlFor='Năm phát hành'>
-              Năm phát hành
-            </label>
-            <select
-              name=''
-              value={searchParams.get('year') ?? 'default'}
-              className='text-white w-full rounded-sm py-1 bg-[#111319] shadow-white shadow-sm'
-              onChange={(e) => handleChangeYear(e.target.value)}
-            >
-              <option value='default'>--Chọn--</option>
-              {yearsArray.map((item) => {
-                return (
-                  <option value={item} key={item} className='md:text-sm'>
-                    {item}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
+          {slug === 'phim-sap-chieu' ? null : (
+            <div className='w-[200px]  pr-2 md:w-full '>
+              <label className='w-full' htmlFor='Năm phát hành'>
+                Năm phát hành
+              </label>
+              <select
+                name=''
+                value={searchParams.get('year') ?? 'default'}
+                className='text-white w-full rounded-sm py-1 bg-[#111319] shadow-white shadow-sm'
+                onChange={(e) => handleChangeYear(e.target.value)}
+              >
+                <option value='default'>--Chọn--</option>
+                {yearsArray.map((item) => {
+                  return (
+                    <option value={item} key={item} className='md:text-sm'>
+                      {item}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          )}
+
           <div className='w-[200px]  pr-2 md:w-1/2'>
             <label className='w-full' htmlFor='Thể loại'>
               Thể loại
@@ -177,13 +179,21 @@ export default function ListMovie() {
             </select>
           </div>
         </section>
-        <section className='h-auto min-h-[2090px]  lg:grid-cols-3 w-full grid grid-cols-5 gap-4  md:grid-cols-2'>
-          {isLoading
-            ? Array(24)
-                .fill(0)
-                .map((_, index) => <Skeleton key={index} height={404} />)
-            : data &&
-              data?.data?.items?.map((movie) => (
+
+        {isLoading ? (
+          Array(24)
+            .fill(0)
+            .map((_, index) => <Skeleton key={index} height={404} />)
+        ) : data && data?.data?.items.length === 0 ? (
+          <section className='w-full h-[600px]'>
+            <h1 className='text-white text-4xl  text-center '>
+              Không có kết quả
+            </h1>
+          </section>
+        ) : (
+          <>
+            <section className='h-auto min-h-[2090px]   w-full grid grid-cols-5 gap-4  lg:grid-cols-3 md:grid-cols-2'>
+              {data?.data?.items?.map((movie) => (
                 <Link
                   to={`/details/${movie.slug}`}
                   key={movie._id}
@@ -192,20 +202,22 @@ export default function ListMovie() {
                   <Card data={movie} />
                 </Link>
               ))}
-        </section>
-        <section className='flex   sm:justify-center md:px-2'>
-          {' '}
-          <Pagination
-            className='pagination'
-            layout='pagination'
-            currentPage={parseInt(searchParams.get('page')) || 1}
-            totalPages={100}
-            onPageChange={onPageChange}
-            previousLabel='Go back'
-            nextLabel='Go forward'
-            showIcons
-          />
-        </section>
+            </section>
+            <section className='flex   sm:justify-center md:px-2'>
+              {' '}
+              <Pagination
+                className='pagination'
+                layout='pagination'
+                currentPage={parseInt(searchParams.get('page')) || 1}
+                totalPages={100}
+                onPageChange={onPageChange}
+                previousLabel='Go back'
+                nextLabel='Go forward'
+                showIcons
+              />
+            </section>
+          </>
+        )}
       </main>
     </>
   );

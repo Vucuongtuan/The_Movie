@@ -47,6 +47,15 @@ body::-webkit-scrollbar-thumb {
   background-color: red;
   border-radius: 10px;
 }
+.border-gray-200 {
+  border: none;
+}
+.border-gray-200 button {
+  margin: 5px 0 5px 0;
+  background-color: transparent !important;
+  border-radius: 8px;
+  border: none;
+}
 
 .bg-gr::before {
   content: '';

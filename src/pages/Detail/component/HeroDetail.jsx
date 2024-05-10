@@ -1,26 +1,25 @@
 import '../style.scss';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import Image from '../../../components/imageComponent/image';
 
 function HeroDetail({ dataDetail, slug }) {
   const [resizeWidth, setResizeWidth] = useState(false);
   const tap = localStorage.getItem(slug);
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) setResizeWidth(true);
       else setResizeWidth(false);
     };
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, [resizeWidth]);
-  console.log(dataDetail);
   const handleClickScroll = (trailer) => {
     const element = document.getElementById(trailer);
     if (element) {
-      // 👇 Will scroll smoothly to the top of the next section
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };

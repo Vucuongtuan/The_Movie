@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import styles from './style.module.scss';
 import classNames from 'classnames/bind';
 import { useQuery } from '@tanstack/react-query';
@@ -7,15 +7,21 @@ import 'swiper/scss/navigation';
 import 'swiper/scss/pagination';
 import 'swiper/scss/scrollbar';
 import './style.module.scss';
+import { Navigation } from 'swiper/modules';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { getMovie } from '../../../services/movie.api';
+import { BASE_IMAGE_URL_3, getMovie } from '../../../services/movie.api';
 import Image from '../../../components/imageComponent/image';
 import { Link } from 'react-router-dom';
+import {
+  LazyLoadComponent,
+  LazyLoadImage,
+} from 'react-lazy-load-image-component';
+import LoadingLayout from '../../../components/LoadingElement/loadingLayout';
 export default function CarouselLayout() {
   const [widthScreen, setWidthScreen] = useState(false);
-
-  useEffect(() => {
+  const [width, setWidth] = useState(window.innerWidth);
+  useLayoutEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
         setWidthScreen(true);
@@ -23,12 +29,13 @@ export default function CarouselLayout() {
         setWidthScreen(false);
       }
     };
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, [widthScreen]);
-  const { data, error } = useQuery({
+  const { data, error, isFetching } = useQuery({
     queryKey: ['/danh-sach/phim-moi-year'],
     queryFn: async () => await getMovie(1, '', 2024, 'phim-moi'),
   });
@@ -36,7 +43,81 @@ export default function CarouselLayout() {
   if (error) {
     <h1 className='text-white'>Liox</h1>;
   }
-  console.log(widthScreen);
+  if (window.innerWidth <= 786) {
+    return (
+      <section className='px-4 rounded-md overflow-hidden'>
+        <Swiper
+          navigation={true}
+          autoplay={{
+            delay: 1000,
+            disableOnInteraction: false,
+          }}
+          modules={[Navigation]}
+          className='mySwiper h-[502px] mt-1 rounded-md'
+        >
+          {' '}
+          {!isFetching ? (
+            data.data.items.map((item) => {
+              return (
+                <SwiperSlide
+                  key={item._id}
+                  autoplay={1000}
+                  className=' h-[500px] w-full  relative bg-gr'
+                >
+                  <div className='h-full w-full '>
+                    <Image
+                      resizeLayout={widthScreen}
+                      movie={item}
+                      className={'w-full h-full object-cover brightness-50'}
+                    />
+                  </div>
+                  <div className='flex px-8   absolute bottom-2 left-4 h-2/3 w-3/6 z-50 lg:w-4/6 md:w-full md:h-[300px]'>
+                    <div
+                      className='w-[60%] px-2 md:w-full
+              
+              '
+                    >
+                      <h2 className='font-cursive text-3xl  py-2'>
+                        {item.name}
+                      </h2>
+                      <span className=''>{item.origin_name}</span>
+                      <div className='w-full h-auto mt-1'>
+                        <span className='w-[45px] border-r border-r-red pr-2'>
+                          {item.episode_current}
+                        </span>
+                        <span className='w-[45px] border-r border-r-red px-2'>
+                          {item.time}
+                        </span>
+                        <span className='w-[45px]  px-2'>{item.type}</span>
+                      </div>
+                      <div className='mt-1 flex flex-col '>
+                        <span>Sub : {item.lang} </span>
+                        <span>Phát hành : {item.year} </span>
+                        <span>
+                          Thể loại :{' '}
+                          {item.category.map((cate) => cate.name).join(', ')}{' '}
+                        </span>
+                      </div>
+                      <div className='mt-8'>
+                        <Link
+                          to={`/details/${item.slug}`}
+                          className='px-16 py-2 bg-red-600 rounded-md'
+                        >
+                          Xem chi tiết
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              );
+            })
+          ) : (
+            <LoadingLayout />
+          )}
+        </Swiper>
+      </section>
+    );
+  }
   return (
     <Swiper
       direction={'vertical'}

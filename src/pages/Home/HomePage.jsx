@@ -2,6 +2,8 @@ import { Suspense, lazy } from 'react';
 import CarouselLayout from './component/Carousel';
 import LoadingLayout from '../../components/LoadingElement/loadingLayout';
 import { Helmet } from 'react-helmet';
+import TvShow from './component/TvShow';
+import Trailer from './component/Trailer';
 const MovieNew = lazy(() => import('./component/MovieNew'));
 const MovieLe = lazy(() => import('./component/MovieLe'));
 const MovieCartoon = lazy(() => import('./component/MovieCartoon'));
@@ -33,6 +35,12 @@ function HomePage() {
           </Suspense>
           <Suspense fallback={<LoadingLayout />}>
             <MovieCartoon />
+          </Suspense>
+          <Suspense fallback={<LoadingLayout />}>
+            <TvShow />
+          </Suspense>
+          <Suspense fallback={<LoadingLayout />}>
+            <Trailer />
           </Suspense>
         </div>
       </main>

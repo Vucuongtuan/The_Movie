@@ -54,7 +54,7 @@ export default function MovieList() {
   return (
     <section className='mt-8'>
       <div className='flex justify-between items-center'>
-        <h2>Phim mới cập nhật</h2>
+        <h2 className='text-3xl font-semibold'>Phim mới cập nhật</h2>
         <Link
           to={'/danh-sach/phim-moi-cap-nhat'}
           className='flex mr-2 py-1 px-4  rounded-md border border-white  text-neutarl-700 text-sm hover:shadow-[4px_4px_0px_0px_rgba(255,255,255)] transition duration-200'

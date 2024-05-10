@@ -90,7 +90,7 @@ export default function TheLoai() {
               /> */}
             </div>
           </section>
-          <div className='h-auto w-full grid grid-cols-5 gap-4 '>
+          <div className='h-auto w-full grid grid-cols-5 gap-4  lg:grid-cols-3 md:grid-cols-2'>
             {isFetching
               ? Array(24)
                   .fill(0)

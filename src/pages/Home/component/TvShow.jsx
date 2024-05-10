@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { getMovie } from '../../../services/movie.api';
 import { Link } from 'react-router-dom';
-import CardGrid from '../../../components/CardGrid';
 import SkeletonElement from '../../../components/Skeleton/Skeleton';
+import CardGrid from '../../../components/CardGrid';
 
-export default function MovieCartoon() {
+export default function TvShow() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const getData = async () => {
       setIsLoading(true);
       try {
-        const res = await getMovie(1, '', 2024, 'hoat-hinh');
+        const res = await getMovie(1, '', '', 'tv-shows');
         setData(res);
       } catch (err) {
         setIsLoading(false);
@@ -24,9 +24,9 @@ export default function MovieCartoon() {
   return (
     <section className='mt-8'>
       <div className='flex justify-between items-center'>
-        <h2 className='text-3xl font-semibold'>Phim Hoạt hình</h2>
+        <h2 className='text-3xl font-semibold'>Tv Shows</h2>
         <Link
-          to={'/danh-sach/hoat-hinh'}
+          to={'/danh-sach/tv-shows'}
           className='flex mr-2 py-1 px-4  rounded-md border border-white  text-neutarl-700 text-sm hover:shadow-[4px_4px_0px_0px_rgba(255,255,255)] transition duration-200'
         >
           <svg
@@ -48,11 +48,11 @@ export default function MovieCartoon() {
       </div>
       <div
         className='mt-8 mb-8  w-full min-h-[300px] h-[500px] gap-2 grid grid-cols-5 grid-rows-2 
-    lg:h-[350px]
-  md:grid-cols-2
-  md:grid-rows-5
-  md:h-auto
-  '
+lg:h-[350px]
+md:grid-cols-2
+md:grid-rows-5
+md:h-auto
+'
       >
         {isLoading
           ? Array.from({ length: data?.items?.length }).map((_, index) => (

@@ -54,7 +54,7 @@ export default function CountryPage() {
       {isFetching === true ? (
         <LoadingElement />
       ) : (
-        <main className='m-auto pt-[80px] px-[8rem] 2xl:px-[5rem] xl:px-[4rem] lg:px-[3rem] md:px-[1rem] '>
+        <main className='m-auto  px-[8rem] 2xl:px-[5rem] xl:px-[4rem] lg:px-[3rem] md:px-[1rem] '>
           <section className='w-full py-2 flex flex-wrap'>
             <h1>Phim hàn</h1>
           </section>
@@ -76,30 +76,43 @@ export default function CountryPage() {
               })}
             </select>
           </section>
-          <div className='h-auto w-full grid grid-cols-5 gap-4 '>
-            {!isFetching
-              ? data?.data?.items?.map((movie) => (
-                  <Link to={`/details/${movie.slug}`} key={movie._id}>
-                    <Card data={movie} />
-                  </Link>
-                ))
-              : Array(24)
-                  .fill(0)
-                  .map((_, index) => <Skeleton key={index} height={404} />)}
-          </div>
-          <section className='flex   sm:justify-center'>
-            {' '}
-            <Pagination
-              className='pagination'
-              layout='pagination'
-              currentPage={parseInt(searchParams.get('page')) || 1}
-              totalPages={100}
-              onPageChange={onPageChange}
-              previousLabel='Go back'
-              nextLabel='Go forward'
-              showIcons
-            />
-          </section>
+
+          {!isFetching ? (
+            data?.data?.items.length !== 0 ? (
+              <>
+                <section className='h-auto w-full grid grid-cols-5 gap-4 lg:grid-cols-3 md:grid-cols-2'>
+                  {data?.data?.items?.map((movie) => (
+                    <Link to={`/details/${movie.slug}`} key={movie._id}>
+                      <Card data={movie} />
+                    </Link>
+                  ))}
+                </section>
+                <section className='flex   sm:justify-center'>
+                  {' '}
+                  <Pagination
+                    className='pagination'
+                    layout='pagination'
+                    currentPage={parseInt(searchParams.get('page')) || 1}
+                    totalPages={100}
+                    onPageChange={onPageChange}
+                    previousLabel='Go back'
+                    nextLabel='Go forward'
+                    showIcons
+                  />
+                </section>
+              </>
+            ) : (
+              <section className='w-full h-[600px]'>
+                <h1 className='text-white text-4xl  text-center '>
+                  Không có kết quả
+                </h1>
+              </section>
+            )
+          ) : (
+            Array(24)
+              .fill(0)
+              .map((_, index) => <Skeleton key={index} height={404} />)
+          )}
         </main>
       )}
     </>

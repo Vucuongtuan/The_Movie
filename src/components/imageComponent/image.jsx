@@ -2,37 +2,6 @@ import React from 'react';
 import { BASE_IMAGE_URL_3 } from '../../services/movie.api';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 const Image = ({ resizeLayout, movie, className }) => {
-  // useEffect(() => {
-  //   const loadImage = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         BASE_IMAGE_URL + (resizeLayout ? movie.thumb_url : movie.poster_url),
-  //         {
-  //           headers: { 'Content-Type': 'application/json' },
-  //           method: 'GET',
-  //         },
-  //       );
-  //       if (response.ok) {
-  //         setImageUrl(
-  //           BASE_IMAGE_URL +
-  //             (resizeLayout ? movie.thumb_url : movie.poster_url),
-  //         );
-  //       } else {
-  //         setImageUrl(
-  //           BASE_IMAGE_URL_2 +
-  //             (resizeLayout ? movie.thumb_url : movie.poster_url),
-  //         );
-  //       }
-  //     } catch (error) {
-  //       setImageUrl(
-  //         BASE_IMAGE_URL_2 +
-  //           (resizeLayout ? movie.thumb_url : movie.poster_url),
-  //       );
-  //     }
-  //   };
-
-  //   loadImage();
-  // }, [resizeLayout, movie]);
   return (
     <LazyLoadImage
       src={
@@ -50,3 +19,34 @@ const Image = ({ resizeLayout, movie, className }) => {
 };
 
 export default Image;
+// useEffect(() => {
+//   const loadImage = async () => {
+//     try {
+//       const response = await fetch(
+//         BASE_IMAGE_URL + (resizeLayout ? movie.thumb_url : movie.poster_url),
+//         {
+//           headers: { 'Content-Type': 'application/json' },
+//           method: 'GET',
+//         },
+//       );
+//       if (response.ok) {
+//         setImageUrl(
+//           BASE_IMAGE_URL +
+//             (resizeLayout ? movie.thumb_url : movie.poster_url),
+//         );
+//       } else {
+//         setImageUrl(
+//           BASE_IMAGE_URL_2 +
+//             (resizeLayout ? movie.thumb_url : movie.poster_url),
+//         );
+//       }
+//     } catch (error) {
+//       setImageUrl(
+//         BASE_IMAGE_URL_2 +
+//           (resizeLayout ? movie.thumb_url : movie.poster_url),
+//       );
+//     }
+//   };
+
+//   loadImage();
+// }, [resizeLayout, movie]);

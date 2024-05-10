@@ -93,7 +93,7 @@ export default function ViewMovie() {
       </Breadcrumb>
 
       <section className='w-full h-auto'>
-        <div className='h-[619px] w-full'>{elementVideo()}</div>
+        <div className='h-[619px] w-full md:h-[300px]'>{elementVideo()}</div>
         <div className='w-full py-1 mt-2 flex justify-end'>
           {dataMovie?.data?.item?.episodes[0]?.server_data[0].slug === '' ? (
             <></>

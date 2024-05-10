@@ -15,6 +15,7 @@ function DetailMovie() {
 
   useEffect(() => {
     const getDetail = async () => {
+      setIsLoading(true);
       try {
         const res = await getDetailMovie(slug);
         setDataDetail(res);
@@ -27,21 +28,24 @@ function DetailMovie() {
     };
     getDetail();
   }, [slug]);
-
+  const handleClickScroll = (trailer) => {
+    const element = document.getElementById(trailer);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   // if (isLoading) {
   //   return <LoadingElement />;
   // }
   if (isError) {
     return <ErrorPage />;
   }
-  console.log(dataDetail?.data?.data.item);
   if (isLoading) {
     return <LoadingElement />;
   }
   return (
     <>
-      {' '}
-      <div className=' bg-[#040404]'>
+      <main className=' bg-[#040404]'>
         <HeroDetail dataDetail={dataDetail?.data?.data.item} slug={slug} />
         <div className='m-auto px-[8rem] 2xl:px-[5rem] xl:px-[4rem] lg:px-[3rem] md:px-[1rem] '>
           <section className='h-auto py-4 bg-[#040404]  '>
@@ -68,7 +72,7 @@ function DetailMovie() {
                     (movie) => (
                       <Link
                         key={movie.name}
-                        to={`/movie/${dataDetail?.data?.data.item.movie?.slug}/trailer`}
+                        onClick={() => handleClickScroll('trailer')}
                         className={`no-underline my-1 mx-1 rounded-md py-1 px-3 border-1 hover:bg-slate-100 hover:text-black font-medium transform transition duration-200 hover:shadow-md  
                             `}
                       >
@@ -99,7 +103,7 @@ function DetailMovie() {
             </div>
           </section>
           <section className='w-full h-auto mb-2 ' id='trailer'>
-            <h3 className='text-2xl'>Trailer</h3>
+            <h3 className='text-2xl py-4'>Trailer</h3>
             <iframe
               src={dataDetail?.data?.data.item.trailer_url
                 .replace(
@@ -112,11 +116,11 @@ function DetailMovie() {
               allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
               referrerpolicy='strict-origin-when-cross-origin'
               allowfullscreen
-              className='w-full h-[600px] rounded-md'
+              className='w-full h-[600px] md:h-[300px] rounded-md'
             ></iframe>
           </section>
         </div>
-      </div>
+      </main>
     </>
   );
 }

@@ -64,7 +64,9 @@ export default function SearchMovie() {
             {dataResult &&
               dataResult.data?.data?.items?.map((item) => (
                 <Link
-                  onClick={() => setInputClicked(false)}
+                  onClick={() => {
+                    setInputClicked(false);
+                  }}
                   to={`/details/${item.slug}`}
                   className='my-2 h-[80px]  w-full flex  text-ellipsis overflow-hidden ...'
                   key={item._id}
