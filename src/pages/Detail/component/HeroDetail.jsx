@@ -1,6 +1,6 @@
 import '../style.scss';
 import { Link } from 'react-router-dom';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import Image from '../../../components/imageComponent/image';
 
 function HeroDetail({ dataDetail, slug }) {

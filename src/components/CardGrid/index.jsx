@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { BASE_IMAGE_URL, BASE_IMAGE_URL_2 } from '../../services/movie.api';
 import { Link } from 'react-router-dom';
 import ImageComponent from '../imageComponent';
 export default function CardGrid({ movie, index }) {

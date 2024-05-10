@@ -1,20 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import LoadingElement from '../../components/LoadingElement';
 import Card from '../../components/CardGrid/card';
 import { Pagination } from 'flowbite-react';
-import { getListOptionNation, getType } from '../../services/movie.api';
+import { getType } from '../../services/movie.api';
 import yearsArray from '../../utils/year';
 import Skeleton from 'react-loading-skeleton';
-import LoadingLayout from '../../components/LoadingElement/loadingLayout';
 
 export default function CountryPage() {
   const { nation } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [country, setCountry] = useState([]);
-  const currentDate = new Date();
-  const { data, isLoading, isFetching, refetch } = useQuery({
+  const { data, isFetching, refetch } = useQuery({
     queryKey: ['/the-loai/' + nation],
     queryFn: async () =>
       await getType(
@@ -25,13 +22,7 @@ export default function CountryPage() {
         'quoc-gia',
       ),
   });
-  useEffect(() => {
-    const getList = async () => {
-      const res = await getListOptionNation();
-      setCountry(res.country);
-    };
-    getList();
-  }, []);
+
   const onPageChange = (page) => {
     if (page !== 1) {
       setSearchParams(`?page=${page}`);

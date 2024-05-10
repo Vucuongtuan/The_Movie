@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BASE_IMAGE_URL_3 } from '../../services/movie.api';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 const ImageComponent = ({ resizeLayout, index, movie }) => {

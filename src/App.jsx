@@ -3,14 +3,9 @@ import './App.css';
 import { Header, Footer } from './components';
 import GlobalStyle from './components/GlobalStyle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-// import { HomePage, DetailMovie } from './pages';
-// import ViewMovie from './pages/viewMovie';
-// import ListMovie from './pages/ListMovie';
-// import TheLoai from './pages/ListMovie/theloai';
-// import CountryPage from './pages/ListMovie/quocgia';
+
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Suspense, lazy, useEffect, useState } from 'react';
-import axios from 'axios';
 import LoadingElement from './components/LoadingElement';
 const HomePage = lazy(() => import('./pages/Home/HomePage'));
 const DetailMovie = lazy(() => import('./pages/Detail/DetailMovie'));

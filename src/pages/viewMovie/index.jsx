@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Breadcrumb, Button } from 'flowbite-react';
 import LinkMovie from './components/linkMovie';
-import { useQuery } from '@tanstack/react-query';
 import { getDetailMovie } from '../../services/movie.api';
 import VideoPlayer from '../../components/HLSVideo';
 import LoadingElement from '../../components/LoadingElement';
+import ErrorElement from '../../components/Error';
 
 export default function ViewMovie() {
   const [linkMovie, setLinkMovie] = useState([]);
@@ -15,7 +15,6 @@ export default function ViewMovie() {
   const { name, slug } = useParams();
   const tap = slug ? parseInt(slug.split('-')[1]?.trim()) : 1;
   localStorage.setItem(dataMovie?.data?.item?.slug, tap);
-  console.log(linkMovie);
   useEffect(() => {
     const getData = async () => {
       setIsLoading(true);
@@ -75,6 +74,9 @@ export default function ViewMovie() {
   };
   if (isLoading) {
     return <LoadingElement />;
+  }
+  if (isError) {
+    return <ErrorElement />;
   }
   return (
     <main className=' m-auto mb-4 px-[8rem] 2xl:px-[5rem] xl:px-[4rem] lg:px-[3rem] md:px-[1rem]'>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import React, { memo, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './style.scss';
 import { Menu, MenuItem } from '../ui/navbar-menu';
 import {
@@ -11,7 +11,7 @@ import SearchMovie from './searchMovie';
 import { Drawer, Sidebar } from 'flowbite-react';
 import { Accordion } from 'flowbite-react';
 
-export default function Header({ className }) {
+function Header({ className }) {
   const [navColor, setNavColor] = useState(false);
   const [active, setActive] = useState(null);
   const [theloai, setTheLoai] = useState([]);
@@ -268,3 +268,4 @@ export default function Header({ className }) {
     </header>
   );
 }
+export default memo(Header);

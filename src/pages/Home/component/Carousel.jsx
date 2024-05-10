@@ -1,6 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import styles from './style.module.scss';
-import classNames from 'classnames/bind';
+import React, { useLayoutEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
@@ -10,20 +8,16 @@ import './style.module.scss';
 import { Navigation } from 'swiper/modules';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { BASE_IMAGE_URL_3, getMovie } from '../../../services/movie.api';
+import { getMovie } from '../../../services/movie.api';
 import Image from '../../../components/imageComponent/image';
 import { Link } from 'react-router-dom';
-import {
-  LazyLoadComponent,
-  LazyLoadImage,
-} from 'react-lazy-load-image-component';
+
 import LoadingLayout from '../../../components/LoadingElement/loadingLayout';
 export default function CarouselLayout() {
   const [widthScreen, setWidthScreen] = useState(false);
-  const [width, setWidth] = useState(window.innerWidth);
   useLayoutEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 768) {
+      if (typeof window !== 'undefined' && window.innerWidth <= 768) {
         setWidthScreen(true);
       } else {
         setWidthScreen(false);

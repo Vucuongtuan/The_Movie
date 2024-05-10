@@ -1,49 +1,55 @@
 import debounce from 'lodash.debounce';
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { getMovieSearch } from '../../services/movie.api';
 import Image from '../imageComponent/image';
 import { Link } from 'react-router-dom';
-import { Modal } from 'flowbite-react';
 
 export default function SearchMovie() {
   const [dataResult, setDataResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [inputClicked, setInputClicked] = useState(false);
-  const handleChangeInput = debounce(async (e) => {
-    setLoading(true);
-    try {
-      if (e.length > 0) {
-        setInputClicked(true);
-      } else {
-        setInputClicked(false);
-      }
-      const res = await getMovieSearch(e.toLowerCase());
-      setDataResult(res);
-      if (e.length === 0) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleChangeInput = useCallback(
+    debounce(async (e) => {
+      setLoading(true);
+      try {
+        if (e.length > 0) {
+          setInputClicked(true);
+        } else {
+          setInputClicked(false);
+        }
+        const res = await getMovieSearch(e.toLowerCase());
+        setDataResult(res);
+        if (e.length === 0) {
+          setDataResult([]);
+        }
+      } catch (err) {
         setDataResult([]);
+        setLoading(false);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      setDataResult([]);
-      setLoading(false);
-    } finally {
-      setLoading(false);
-    }
-  }, 1000);
+    }, 1000),
+    [],
+  );
+  const containerClassName = useMemo(() => {
+    return `relative h-full w-full flex px-2 justify-start items-center transition-all duration-500 md:justify-center`;
+  }, []);
+
+  const resultContainerClassName = useMemo(() => {
+    return `absolute h-auto max-h-[400px] w-[350px] top-14 rounded-md overflow-hidden items-start z-40 text-xl leading-[100px] bg-[#1e1e1e] transition-all duration-500 ${
+      inputClicked ? '' : 'hidden'
+    }`;
+  }, [inputClicked]);
   return (
-    <div className=' relative h-full w-full flex px-2  justify-start items-center transition-all duration-500 md:justify-center  '>
+    <div className={containerClassName}>
       <input
         type='text'
         placeholder='Tìm kiếm phim ...'
         onChange={(e) => handleChangeInput(e.target.value)}
         className=' relative w-full h-1/2 bg-transparent border-none border-b-2 border-[#767f8f] text-white focus:outline-0 '
       />
-      <div
-        className={
-          !inputClicked
-            ? `hidden`
-            : ` absolute h-auto max-h-[400px] w-[350px]  top-14 rounded-md overflow-hidden  items-start z-40 text-xl leading-[100px]  bg-[#1e1e1e]  transition-all duration-500`
-        }
-      >
+      <div className={resultContainerClassName}>
         {loading ? (
           <div className='flex space-x-2 justify-center py-4 h-screen dark:invert transition-all duration-500'>
             <span className='sr-only'>Loading...</span>

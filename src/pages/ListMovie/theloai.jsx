@@ -4,12 +4,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom';
 import LoadingElement from '../../components/LoadingElement';
 import Card from '../../components/CardGrid/card';
 import { Pagination } from 'flowbite-react';
-import {
-  getListOption,
-  getListOptionTheLoai,
-  getType,
-} from '../../services/movie.api';
-import YearSelector from './component/YearSelector';
+import { getListOptionTheLoai, getType } from '../../services/movie.api';
 import Skeleton from 'react-loading-skeleton';
 
 export default function TheLoai() {
@@ -17,7 +12,7 @@ export default function TheLoai() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [country, setCountry] = useState([]);
   const currentDate = new Date();
-  const { data, isLoading, isFetching, refetch } = useQuery({
+  const { data, isFetching, refetch } = useQuery({
     queryKey: ['/the-loai/' + slug],
     queryFn: async () =>
       await getType(
