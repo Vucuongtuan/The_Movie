@@ -9,8 +9,8 @@ import ListMovie from './pages/ListMovie';
 import TheLoai from './pages/ListMovie/theloai';
 import CountryPage from './pages/ListMovie/quocgia';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import HeaderMobile from './components/header/HeaderMobile';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -44,10 +44,8 @@ function App() {
 
   return (
     <GlobalStyle>
-      {' '}
       <QueryClientProvider client={queryClient}>
-        {/* {!isLoginPage && <Header />} */}
-        {!isLoginPage && resizeWidth ? <Header /> : <HeaderMobile />}
+        {!isLoginPage && <Header />}
         <Routes>
           <Route path='/' element={<HomePage />} />
 

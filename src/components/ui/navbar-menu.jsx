@@ -12,7 +12,10 @@ const transition = {
 
 export const MenuItem = ({ setActive, active, item, children }) => {
   return (
-    <div onMouseEnter={() => setActive(item)} className='relative '>
+    <div
+      onMouseEnter={() => setActive(item)}
+      className='relative md:hidden lg:hidden'
+    >
       <motion.p
         transition={{ duration: 0.3 }}
         className='cursor-pointer text-black hover:opacity-[0.9] dark:text-white'
@@ -51,7 +54,7 @@ export const Menu = ({ setActive, children }) => {
   return (
     <nav
       onMouseLeave={() => setActive(null)} // resets the state
-      className='relative h-full color_nav  boder border-transparent  shadow-input flex justify-center space-x-4 px-8  '
+      className='relative h-full color_nav  boder border-transparent  shadow-input flex justify-center space-x-4 px-8 md:hidden lg:hidden '
     >
       {children}
     </nav>

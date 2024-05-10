@@ -2,9 +2,14 @@
 const {
   default: flattenColorPalette,
 } = require('tailwindcss/lib/util/flattenColorPalette');
+const flowbite = require('flowbite-react/tailwind');
 module.exports = {
   important: true,
-  content: ['./src/**/*.{js,jsx,ts,tsx}', './src/**/*.{js,ts,jsx,tsx,mdx'],
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx',
+    flowbite.content(),
+  ],
   theme: {
     screens: {
       se: { min: '0px', max: '768px' },
@@ -32,7 +37,7 @@ module.exports = {
       },
     },
   },
-  plugins: [addVariablesForColors],
+  plugins: [addVariablesForColors, flowbite.plugin()],
 };
 function addVariablesForColors({ addBase, theme }) {
   let allColors = flattenColorPalette(theme('colors'));

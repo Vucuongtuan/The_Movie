@@ -10,6 +10,7 @@ import {
   getType,
 } from '../../services/movie.api';
 import YearSelector from './component/YearSelector';
+import Skeleton from 'react-loading-skeleton';
 
 export default function TheLoai() {
   const { slug } = useParams();
@@ -90,12 +91,16 @@ export default function TheLoai() {
             </div>
           </section>
           <div className='h-auto w-full grid grid-cols-5 gap-4 '>
-            {data &&
-              data?.data?.items?.map((movie) => (
-                <Link to={`/details/${movie.slug}`} key={movie._id}>
-                  <Card data={movie} />
-                </Link>
-              ))}
+            {isFetching
+              ? Array(24)
+                  .fill(0)
+                  .map((_, index) => <Skeleton key={index} height={404} />)
+              : data &&
+                data?.data?.items?.map((movie) => (
+                  <Link to={`/details/${movie.slug}`} key={movie._id}>
+                    <Card data={movie} />
+                  </Link>
+                ))}
           </div>
           <section className='flex   sm:justify-center'>
             {' '}

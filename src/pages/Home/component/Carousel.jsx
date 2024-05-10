@@ -11,6 +11,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { getMovie } from '../../../services/movie.api';
 import Image from '../../../components/imageComponent/image';
+import { Link } from 'react-router-dom';
 export default function CarouselLayout() {
   const [widthScreen, setWidthScreen] = useState(false);
 
@@ -68,7 +69,7 @@ export default function CarouselLayout() {
                 <Image
                   resizeLayout={!widthScreen}
                   movie={item}
-                  className={'p-2 rounded-[8px] w-[40%] md:hidden'}
+                  className={'p-2 h-full  rounded-md w-full md:hidden'}
                 />
                 <div
                   className='w-[60%] px-2 md:w-full
@@ -95,9 +96,12 @@ export default function CarouselLayout() {
                     </span>
                   </div>
                   <div className='mt-8'>
-                    <button className='px-16 py-2 bg-red-600 rounded-md'>
+                    <Link
+                      to={`/details/${item.slug}`}
+                      className='px-16 py-2 bg-red-600 rounded-md'
+                    >
                       Xem chi tiết
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

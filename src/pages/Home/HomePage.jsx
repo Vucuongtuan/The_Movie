@@ -19,7 +19,7 @@ function HomePage() {
         <meta property='og:title' content={title} />
         <meta property='og:description' content={description} />
         <meta property='og:image' content={thumbnailUrl} />
-        <meta property='og:image:width' content='1200' />{' '}
+        <meta property='og:image:width' content='1600' />{' '}
         <meta property='og:image:height' content='630' />
       </Helmet>
       <main className='w-full'>
@@ -34,23 +34,6 @@ function HomePage() {
           <Suspense fallback={<LoadingLayout />}>
             <MovieCartoon />
           </Suspense>
-
-          <br />
-          {/* <Suspense fallback={<>Loading ...</>}>
-          <MoviePopular />{' '}
-          </Suspense>
-          <br />
-          <Suspense fallback={<>Loading ...</>}>
-          <MovieSeries />{' '}
-          </Suspense>
-          <br />
-          <Suspense fallback={<>Loading ...</>}>
-          <MovieTopRated />{' '}
-          </Suspense>
-          <br />
-          <Suspense fallback={<>Loading ...</>}>
-          <MovieCartoon />{' '}
-        </Suspense> */}
         </div>
       </main>
     </>

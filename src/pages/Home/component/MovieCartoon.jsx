@@ -21,7 +21,6 @@ export default function MovieCartoon() {
     };
     getData();
   }, []);
-  console.log(data);
   return (
     <section className='mt-8'>
       <div className='flex justify-between items-center'>

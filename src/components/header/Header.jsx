@@ -8,7 +8,7 @@ import {
 } from '../../services/movie.api';
 
 import SearchMovie from './searchMovie';
-import { Drawer } from 'flowbite-react';
+import { Drawer, Sidebar } from 'flowbite-react';
 
 export default function Header({ className }) {
   const [navColor, setNavColor] = useState(false);
@@ -18,7 +18,9 @@ export default function Header({ className }) {
   const [isViewMovie, setIsViewMovie] = useState(false);
   const { pathname } = useLocation();
   // const { name } = useParams();
+  const [isOpen, setIsOpen] = useState(false);
 
+  const handleClose = () => setIsOpen(false);
   useEffect(() => {
     if (
       pathname.includes('/movie/') ||
@@ -38,7 +40,6 @@ export default function Header({ className }) {
         getListOptionTheLoai(),
         getListOptionNation(),
       ]);
-      console.log(theloai.data.data.items);
       setTheLoai(theloai.data.data.items);
       setCountry(country.data.data.items);
     };
@@ -58,17 +59,75 @@ export default function Header({ className }) {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [navColor]);
-
+  const drawerMovile = () => (
+    <div className='hidden  md:block lg:block'>
+      <div className='flex h-full  items-center '>
+        <button
+          onClick={() => setIsOpen(true)}
+          className='my-3  hover:bg-slate-300 rounded-full p-1 transition-all duration-300'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth={1.5}
+            stroke='currentColor'
+            className='w-7 h-7'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              d='M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5'
+            />
+          </svg>
+        </button>
+      </div>
+      <Drawer open={isOpen} onClose={handleClose}>
+        <Drawer.Header title='Drawer' />
+        <Drawer.Items>
+          <Sidebar
+            aria-label='Sidebar with multi-level dropdown example'
+            className='[&>div]:bg-transparent [&>div]:p-0'
+          >
+            <Sidebar.Items>
+              <Sidebar.ItemGroup>
+                <Sidebar.Item as={Link} to={'/danh-sach/phim-bo'}>
+                  Phim bộ
+                </Sidebar.Item>
+                <Sidebar.Item as={Link} to={'/danh-sach/phim-le'}>
+                  Phim lẻ
+                </Sidebar.Item>
+                <Sidebar.Item as={Link} to={'/danh-sach/hoat-hinh'}>
+                  Hoạt hình
+                </Sidebar.Item>
+              </Sidebar.ItemGroup>
+              <Sidebar.ItemGroup>
+                <Sidebar.Item href='https://github.com/themesberg/flowbite-react/'>
+                  Docs
+                </Sidebar.Item>
+                <Sidebar.Item href='https://flowbite-react.com/'>
+                  Components
+                </Sidebar.Item>
+                <Sidebar.Item href='https://github.com/themesberg/flowbite-react/issues'>
+                  Help
+                </Sidebar.Item>
+              </Sidebar.ItemGroup>
+            </Sidebar.Items>
+          </Sidebar>
+        </Drawer.Items>
+      </Drawer>
+    </div>
+  );
   return (
     <header
-      className={`  top-0 flex transition-all  duration-500 inset-x-0 w-full h-[64px] leading-[64px] 
-         mx-auto z-40
+      className={`  top-0 flex transition-all  duration-500 inset-x-0 w-full h-[64px] leading-[64px] lg:h-[70px]  px-[8rem] 2xl:px-[5rem] xl:px-[4rem] lg:px-[1rem] md:px-[1rem]
+         mx-auto z-40 md:sticky
          ${
            isViewMovie
              ? 'bg-black sticky mb-2'
              : navColor
              ? 'bg-black sticky mb-2'
-             : 'fixed bg-transparent'
+             : 'fixed bg-transparent '
          }
          `}
       style={
@@ -77,9 +136,9 @@ export default function Header({ className }) {
           : { backgroundColor: 'transparent' }
       }
     >
-      <div className='w-2/3 flex pl-16 text-white '>
-        <Link to={'/'} className='px-8'>
-          <img src='/logoTC-BG.png' alt='' className='h-full w-full' />
+      <div className='w-[60%] flex  md:pl-2 text-white md:w-[40%] md:block lg:w-[30%]  lg:text-lg'>
+        <Link to={'/'} className='px-8 md:px-0 md:w-full lg:px-1'>
+          <img src='/logoTC-BG.png' alt='' className='h-full w-full ' />
           <h1 className='hidden'>TC Phim</h1>
         </Link>
 
@@ -127,8 +186,32 @@ export default function Header({ className }) {
           </MenuItem> */}
         </Menu>
       </div>
-      <div className='w-1/3'>
-        <SearchMovie />
+      <div className='w-[40%] md:w-[60%] lg:w-[70%]  flex'>
+        <div className='w-2/3'>
+          <SearchMovie />
+        </div>
+        <div className='h-full w-1/3 py-1  flex justify-end'>
+          {drawerMovile()}
+          {/* <button
+            className='w-8 h-8 text-center mx-2 px-1 rounded-full  bg-yellow-400'
+            aria-label='menu'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='w-6 h-6'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5'
+              />
+            </svg>
+          </button> */}
+        </div>
       </div>
     </header>
   );

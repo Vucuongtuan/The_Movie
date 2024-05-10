@@ -77,15 +77,15 @@ export default function CountryPage() {
             </select>
           </section>
           <div className='h-auto w-full grid grid-cols-5 gap-4 '>
-            {!isLoading ? (
-              data?.data?.items?.map((movie) => (
-                <Link to={`/details/${movie.slug}`} key={movie._id}>
-                  <Card data={movie} />
-                </Link>
-              ))
-            ) : (
-              <LoadingLayout />
-            )}
+            {!isFetching
+              ? data?.data?.items?.map((movie) => (
+                  <Link to={`/details/${movie.slug}`} key={movie._id}>
+                    <Card data={movie} />
+                  </Link>
+                ))
+              : Array(24)
+                  .fill(0)
+                  .map((_, index) => <Skeleton key={index} height={404} />)}
           </div>
           <section className='flex   sm:justify-center'>
             {' '}

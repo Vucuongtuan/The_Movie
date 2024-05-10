@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { Modal } from 'flowbite-react';
 
 export default function SearchMovie() {
-  const [openModal, setOpenModal] = useState(true);
   const [dataResult, setDataResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [inputClicked, setInputClicked] = useState(false);
@@ -30,14 +29,13 @@ export default function SearchMovie() {
       setLoading(false);
     }
   }, 1000);
-  console.log(dataResult);
   return (
-    <div className=' relative h-full w-full flex  justify-start items-center transition-all duration-500'>
+    <div className=' relative h-full w-full flex px-2  justify-start items-center transition-all duration-500 md:justify-center  '>
       <input
         type='text'
         placeholder='Tìm kiếm phim ...'
         onChange={(e) => handleChangeInput(e.target.value)}
-        className=' relative w-2/3 h-1/2 bg-transparent border-b-2 border-[#767f8f] text-white focus:outline-0'
+        className=' relative w-full h-1/2 bg-transparent border-none border-b-2 border-[#767f8f] text-white focus:outline-0 '
       />
       <div
         className={
@@ -62,7 +60,7 @@ export default function SearchMovie() {
             Không có data
           </span>
         ) : (
-          <ul className='w-[350px] h-auto max-h-[400px] overflow-y-scroll transition-all duration-500'>
+          <ul className='w-full h-auto max-h-[400px] overflow-y-scroll transition-all duration-500'>
             {dataResult &&
               dataResult.data?.data?.items?.map((item) => (
                 <Link

@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  BASE_IMAGE_URL,
-  BASE_IMAGE_URL_2,
-  BASE_IMAGE_URL_3,
-} from '../../services/movie.api';
-
+import { BASE_IMAGE_URL_3 } from '../../services/movie.api';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 const ImageComponent = ({ resizeLayout, index, movie }) => {
   // const [imageUrl, setImageUrl] = useState(null);
 
@@ -55,7 +51,7 @@ const ImageComponent = ({ resizeLayout, index, movie }) => {
   // }, [resizeLayout, index, movie]);
 
   return (
-    <img
+    <LazyLoadImage
       src={
         resizeLayout
           ? BASE_IMAGE_URL_3 + movie.poster_url
@@ -63,6 +59,8 @@ const ImageComponent = ({ resizeLayout, index, movie }) => {
       }
       alt={movie.name}
       loading='lazy'
+      effect='opacity'
+      delayTime='300'
       className='w-full object-cover h-full group-hover:scale-110 transition-all duration-500'
     />
   );
