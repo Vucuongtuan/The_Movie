@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import { memo, useEffect, useState } from 'react';
 import './style.scss';
 import { HeroDetail } from './component';
-import { BASE_IMAGE_URL_3, getDetailMovie } from '../../services/movie.api';
+import { getDetailMovie } from '../../services/movie.api';
 import ErrorPage from '../Error';
 import LoadingElement from '../../components/LoadingElement';
 import { Helmet } from 'react-helmet';

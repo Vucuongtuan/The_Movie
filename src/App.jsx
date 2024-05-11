@@ -4,7 +4,6 @@ import { Header, Footer } from './components';
 import GlobalStyle from './components/GlobalStyle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Suspense, lazy, useEffect, useState } from 'react';
 import LoadingElement from './components/LoadingElement';
 const HomePage = lazy(() => import('./pages/Home/HomePage'));
@@ -60,7 +59,6 @@ function App() {
           </Routes>
           {!isLoginPage && <Footer />}{' '}
         </Suspense>
-        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </GlobalStyle>
   );
