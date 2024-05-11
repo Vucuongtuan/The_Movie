@@ -43,24 +43,25 @@ export default function CardGrid({ movie, index }) {
         loading='lazy'
         className='w-full object-cover h-full  group-hover:scale-110 transition-all duration-500 '
       /> */}
-      <div className='w-full h-1/2 flex justify-between items-center px-2 py-1 bg-gradient-to-t from-black via-[rgba(0, 0, 0, .39)] to-transparent  absolute bottom-0 left-0'>
-        <div className=''>
+      <div className='w-full h-full   px-2   bg-gradient-to-t from-black via-[rgba(0, 0, 0, .39)] to-transparent  absolute bottom-0 left-0'>
+        <div className='h-1/2 w-full absolute bottom-0 left-0  flex items-end px-2'>
           <h3
-            className={`-mt-2 ${
+            className={`py-2 mb-4 ${
               index === 0
-                ? 'text-[1.8rem] md:text-[1.2rem] mt-4'
-                : 'text-[1.2rem] md:text-[0.8rem] lg:text-[0.8rem] -py-8'
+                ? 'text-[1.8rem] md:text-[1.2rem] '
+                : 'text-[1.2rem] md:text-[0.8rem] lg:text-[0.8rem]  '
             }`}
           >
             {movie.name}
           </h3>
+
           <span className='-mt-4 lg:text-[0.8rem] absolute bottom-0'>
             {movie.episode_current}
           </span>
+          <span className='lg:text-[0.8rem] absolute bottom-0 right-1'>
+            {movie.year}
+          </span>
         </div>
-        <span className='lg:text-[0.8rem] absolute bottom-0 right-1'>
-          {movie.year}
-        </span>
       </div>
     </Link>
   );

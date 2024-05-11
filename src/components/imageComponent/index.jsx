@@ -61,7 +61,7 @@ const ImageComponent = ({ resizeLayout, index, movie }) => {
       loading='lazy'
       effect='opacity'
       delayTime='300'
-      className='w-full object-cover h-full group-hover:scale-110 transition-all duration-500'
+      className='w-full object-cover   h-full group-hover:scale-110 transition-all duration-500'
     />
   );
 };

@@ -2,9 +2,10 @@ import { Link, useParams } from 'react-router-dom';
 import { memo, useEffect, useState } from 'react';
 import './style.scss';
 import { HeroDetail } from './component';
-import { getDetailMovie } from '../../services/movie.api';
+import { BASE_IMAGE_URL_3, getDetailMovie } from '../../services/movie.api';
 import ErrorPage from '../Error';
 import LoadingElement from '../../components/LoadingElement';
+import { Helmet } from 'react-helmet';
 
 function DetailMovie() {
   const { slug } = useParams();
@@ -43,8 +44,30 @@ function DetailMovie() {
   if (isLoading) {
     return <LoadingElement />;
   }
+
   return (
     <>
+      <Helmet>
+        <title>{dataDetail?.data?.data?.seoOnPage?.titleHead}</title>
+        <meta
+          name='description'
+          content={dataDetail?.data?.data?.seoOnPage?.description}
+        />
+        <meta
+          property='og:title'
+          content={dataDetail?.data?.data?.seoOnPage?.titleHead}
+        />
+        <meta
+          property='og:description'
+          content={dataDetail?.data?.data?.seoOnPage?.description}
+        />
+        <meta
+          property='og:image'
+          content={dataDetail?.data?.data?.seoOnPage?.seoSchema.image}
+        />
+        <meta property='og:image:width' content='1600' />
+        <meta property='og:image:height' content='630' />
+      </Helmet>
       <main className=' bg-[#040404]'>
         <HeroDetail dataDetail={dataDetail?.data?.data.item} slug={slug} />
         <div className='m-auto px-[8rem] 2xl:px-[5rem] xl:px-[4rem] lg:px-[3rem] md:px-[1rem] '>

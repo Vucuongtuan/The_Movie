@@ -56,7 +56,10 @@ body::-webkit-scrollbar-thumb {
   border-radius: 8px;
   border: none;
 }
-
+a .lazy-load-image-background {
+  height: 100% !important;
+  width: 100% !important;
+}
 .bg-gr::before {
   content: '';
   position: absolute;
