@@ -32,8 +32,21 @@ module.exports = {
       screens: {
         sm: '250px',
       },
+      animation: {
+        aurora: 'aurora 60s linear infinite',
+      },
       colors: {
         customBaseColors: '#202124',
+      },
+      keyframes: {
+        aurora: {
+          from: {
+            backgroundPosition: '50% 50%, 50% 50%',
+          },
+          to: {
+            backgroundPosition: '350% 50%, 350% 50%',
+          },
+        },
       },
     },
   },

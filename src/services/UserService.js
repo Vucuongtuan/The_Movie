@@ -1,40 +1,66 @@
-import { db, auth } from '../firebase';
-import { child, get, ref, set, remove, update } from 'firebase/database';
+import { analytics, auth, database } from '../config/firebase';
+import {
+  child,
+  get,
+  ref,
+  set,
+  remove,
+  update,
+  push,
+  query,
+  orderByChild,
+  equalTo,
+} from 'firebase/database';
 import apibase from './axios';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 //firebase
 const getDataUser = async () => {
   try {
-    const snapshot = await get(child(ref(db), 'user'));
+    const snapshot = await get(child(ref(database), 'auth'));
     return snapshot.val();
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
-const postDataUser = async (name, email, password, image) => {
+export async function signup(name, email, password) {
   try {
-    const snapshot = await get(child(ref(db), 'user'));
-    const user = snapshot.val();
-    const lengId = user.length;
-    const idUser = user[lengId - 1].id;
-    const nextId = idUser;
-    const userRef = child(ref(db), `user/${lengId}`);
-    await set(userRef, {
-      id: nextId + 1,
-      name: name,
-      email: email,
-      password: password,
-      image: image,
-    });
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      name,
+      email,
+      password,
+    );
+    console.log('User created successfully:', userCredential.user);
   } catch (error) {
-    console.log('Error posting data:', error);
+    console.error('Signup error:', error);
   }
+}
+const postDataUser = async (data) => {
+  const emailRef = query(
+    ref(database, 'auth'),
+    orderByChild('email'),
+    equalTo(data.email),
+  );
+  const emailSnapshot = await get(emailRef);
+  if (emailSnapshot.exists()) {
+    return false;
+  }
+  const id = Math.floor(Math.random() * 10000);
+  const userRef = ref(database, 'auth/' + id);
+  await set(userRef, {
+    userId: id,
+    name: data.name,
+    email: data.email,
+    password: data.password,
+  });
+  return true;
 };
 
 const deleteDataUser = async (id) => {
   try {
-    const removeRef = child(ref(db), `user/${id - 1}`);
+    const removeRef = child(ref(database), `user/${id - 1}`);
     await remove(removeRef, id);
   } catch (error) {
     console.log('Error delete Data : ', error);
@@ -42,7 +68,7 @@ const deleteDataUser = async (id) => {
 };
 const updateDataUser = async (id, name, email, password, image) => {
   try {
-    const updateRef = child(ref(db), `user/${id - 1}`);
+    const updateRef = child(ref(database), `user/${id - 1}`);
     await update(updateRef, {
       id,
       name,
@@ -55,21 +81,21 @@ const updateDataUser = async (id, name, email, password, image) => {
   }
 };
 
-const loginDataUser = async (email, password) => {
-  try {
-    // const userCredential = await auth.signInWithEmailAndPassword(email, password);
-    // const user = userCredential.user;
-    // const idToken = await user.getIdToken();
+// const loginDataUser = async (email, password) => {
+//   try {
+//     // const userCredential = await auth.signInWithEmailAndPassword(email, password);
+//     // const user = userCredential.user;
+//     // const idToken = await user.getIdToken();
 
-    await auth.auth().signInWithEmailAndPassword(email, password);
+//     await auth.auth().signInWithEmailAndPassword(email, password);
 
-    // console.log('Token cua ban la : '+ idToken);
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     // console.log('Token cua ban la : '+ idToken);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-//apiTheMovieDB
+//apiTheMoviedatabase
 const apikeyMovie = 'e9e9d8da18ae29fc430845952232787c';
 const getDataMovie = async (page) => {
   return apibase.get(
@@ -160,13 +186,7 @@ const getSimilarMovie = async (id) => {
   return apibase.get(`/3/movie/${id}/similar?api_key=${apikeyMovie}`);
 };
 //export api firebase
-export {
-  getDataUser,
-  postDataUser,
-  deleteDataUser,
-  updateDataUser,
-  loginDataUser,
-};
+export { getDataUser, postDataUser, deleteDataUser, updateDataUser };
 //export api TheMovie
 export {
   getDataMovie,

@@ -78,9 +78,10 @@ export default function MovieList() {
       </div>
       <div
         className='mt-8 mb-8  w-full min-h-[300px] h-[500px] gap-2 grid grid-cols-5 grid-rows-3 
-        lg:h-[350px]
+        lg:h-[200px]
+        xl:h-[350px]
         md:h-auto
-        md:max-h-[1800px]
+        md:max-h-[2200px]
       md:grid-cols-2
       md:grid-rows-5
       '

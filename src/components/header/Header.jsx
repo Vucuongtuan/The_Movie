@@ -8,8 +8,9 @@ import {
 } from '../../services/movie.api';
 
 import SearchMovie from './searchMovie';
-import { Drawer, Sidebar } from 'flowbite-react';
+import { Button, Drawer, Popover, Sidebar } from 'flowbite-react';
 import { Accordion } from 'flowbite-react';
+import Profile from './Profile';
 
 function Header({ className }) {
   const [navColor, setNavColor] = useState(false);
@@ -239,11 +240,15 @@ function Header({ className }) {
         </Menu>
       </div>
       <div className='w-[40%] md:w-[60%] lg:w-[70%]  flex justify-between'>
-        <div className='flex-grow'>
+        <div className='w-[65%]'>
           <SearchMovie />
+        </div>
+        <div className='flex-grow'>
+          <Profile />
         </div>
         <div className='h-full w-[35px]  py-1  flex justify-end '>
           {drawerMovile()}
+
           {/* <button
             className='w-8 h-8 text-center mx-2 px-1 rounded-full  bg-yellow-400'
             aria-label='menu'

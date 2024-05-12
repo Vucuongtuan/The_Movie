@@ -1,11 +1,14 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import { Header, Footer } from './components';
 import GlobalStyle from './components/GlobalStyle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
+import Cookies from 'js-cookie';
 import { Suspense, lazy, useEffect, useState } from 'react';
 import LoadingElement from './components/LoadingElement';
+import SignUp from './pages/Auth/signUp';
+import SignIn from './pages/Auth/signIn';
+import Profile from './pages/Profile';
 const HomePage = lazy(() => import('./pages/Home/HomePage'));
 const DetailMovie = lazy(() => import('./pages/Detail/DetailMovie'));
 const ViewMovie = lazy(() => import('./pages/viewMovie'));
@@ -28,7 +31,10 @@ const queryClient = new QueryClient({
 function App() {
   const [resizeWidth, setResizeWidth] = useState(true);
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
+  // const router = useNavigate();
+  const isLoginPage =
+    location.pathname === '/sign-in' || location.pathname === '/sign-up';
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.innerWidth >= 768) {
@@ -50,6 +56,9 @@ function App() {
           {!isLoginPage && <Header />}
           <Routes>
             <Route path='/' element={<HomePage />} />
+            <Route path='/sign-up' element={<SignUp />} />
+            <Route path='/sign-in' element={<SignIn />} />
+            <Route path='/profile/:id' element={<Profile />} />
 
             <Route path='/details/:slug' element={<DetailMovie />} />
             <Route path='/movie/:name/:slug' element={<ViewMovie />} />
