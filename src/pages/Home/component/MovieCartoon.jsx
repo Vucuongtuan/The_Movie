@@ -48,10 +48,10 @@ export default function MovieCartoon() {
       </div>
       <div
         className='mt-8 mb-8  w-full min-h-[300px] h-[500px] gap-2 grid grid-cols-5 grid-rows-3 
-    lg:h-[350px]
-  md:grid-cols-2
-  md:grid-rows-5
-  md:h-auto
+        lg:h-[350px]
+        md:grid-cols-2
+        md:grid-rows-5
+        md:h-auto
   '
       >
         {isLoading

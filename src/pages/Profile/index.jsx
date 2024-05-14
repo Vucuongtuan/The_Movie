@@ -1,26 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import SideBar from './sideBar';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import ProfileLayout from './layout';
 
 export default function Profile() {
-  const { id } = useParams();
-  const [data, setData] = useState([]);
-  //   useEffect(() => {
-  //     const getProfile = async () => {
-  //       try {
-  //         const res = await getProfile(id);
-  //         setData(res);
-  //       } catch (error) {
-  //         console.error('Error fetching profile data:', error);
-  //       }
-  //     };
-  //     getProfile();
-  //   }, [id]);
+  const local = JSON.parse(localStorage.getItem('dataUser'));
+
   return (
-    <main className='h-[700px] w-full flex justify-end items-end '>
-      <div className='h-[400px] w-full m-auto px-[8rem] 2xl:px-[5rem] xl:px-[4rem] lg:px-[3rem] md:px-[1rem]'>
-        <SideBar />
-      </div>
-    </main>
+    <ProfileLayout>
+      <section className='flex-grow h-full'>
+        <h1 className='text-4xl px-4 pb-4 font-medium'>Thông tin cá nhân</h1>
+        <div className='h-auto w-full px-8 space-y-2'>
+          <p>
+            <label htmlFor='Tên'>Tên : </label>
+            <span className='px-2'>{local.name}</span>
+          </p>
+          <p>
+            <label htmlFor='Email'>Email : </label>
+            <span className='px-2'>{local.email}</span>
+          </p>
+          <p>
+            <label htmlFor='ID'>ID :</label>
+            <span className='px-2'>{local.id}</span>
+          </p>
+        </div>
+      </section>
+    </ProfileLayout>
   );
 }

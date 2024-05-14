@@ -26,3 +26,30 @@ export const getProfile = async (id) => {
   const res = await axios.get(`http://localhost:4000/auth/profile/${id}`);
   return res;
 };
+export const getListMovies = async (id) => {
+  const res = await axios.post(`http://localhost:4000/list/${id}`);
+  return res;
+};
+export const addListMovies = async (idUser, movie) => {
+  const res = await axios.post(`http://localhost:4000/list`, { idUser, movie });
+  return res;
+};
+export const deleteListMovies = async (movie) => {
+  const res = await axios.delete(`http://localhost:4000/list`, { movie });
+  return res;
+};
+export const getHistodyMovies = async (id) => {
+  const res = await axios.post(`http://localhost:4000/history/${id}`);
+  return res;
+};
+export const addHistodyMovies = async (idUser, movie) => {
+  const res = await axios.post(`http://localhost:4000/history`, {
+    idUser,
+    movie,
+  });
+  return res;
+};
+export const deleteHistodyMovies = async (movie) => {
+  const res = await axios.delete(`http://localhost:4000/history`, { movie });
+  return res;
+};

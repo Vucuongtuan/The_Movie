@@ -50,7 +50,7 @@ export default function Profile() {
           </p>
           <ul className='flex text-sm  w-full text-center '>
             <li className='w-1/2 hover:scale-110 transition-all duration-500 cursor-pointer'>
-              <Link to={'/profile/' + local.id}>Profile</Link>
+              <Link to={'/profile'}>Profile</Link>
             </li>
             <li
               className='w-1/2 hover:scale-110 transition-all duration-500 cursor-pointer'

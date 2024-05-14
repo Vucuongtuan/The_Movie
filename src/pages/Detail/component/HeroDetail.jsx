@@ -1,10 +1,15 @@
 import '../style.scss';
 import { Link } from 'react-router-dom';
-import { useLayoutEffect, useState } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import Image from '../../../components/imageComponent/image';
-
+import { Popover, Spinner } from 'flowbite-react';
+import { addListMovies } from '../../../services/auth';
+import Cookies from 'js-cookie';
 function HeroDetail({ dataDetail, slug }) {
   const [resizeWidth, setResizeWidth] = useState(false);
+  const [loadingAdd, setLoadingAdd] = useState(false);
+  let status;
+  console.log(status);
   const tap = localStorage.getItem(slug);
   useLayoutEffect(() => {
     const handleResize = () => {
@@ -23,7 +28,58 @@ function HeroDetail({ dataDetail, slug }) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
+  const content = (
+    <div className='w-64 text-sm text-gray-500 dark:text-gray-400'>
+      <div className='border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700'>
+        <h3 className='font-semibold text-gray-900 dark:text-white'>
+          Thêm phim vào lịch sử
+        </h3>
+      </div>
+      <div className='px-3 py-2'>
+        <p>Lưu vào lịch sử để xem sau hoặc hiển thi dễ dàng hơn</p>
+      </div>
+    </div>
+  );
+  const auth = Cookies.get('token');
+  const handleAddList = useCallback(async () => {
+    setLoadingAdd(true);
+    try {
+      if (auth === undefined) {
+        alert('Vui lòng đăng nhập để có thể thêm vào lịch sử');
+        return;
+      }
+      const local = JSON.parse(localStorage.getItem('dataUser'));
+      const movie = {
+        name: dataDetail.name,
+        slug: dataDetail.slug,
+        tap: dataDetail.episode_current,
+        thumb_url: dataDetail.thumb_url,
+        poster_url: dataDetail.poster_url,
+      };
+      const res = await addListMovies(local.id, movie);
+      const status = res?.data?.status;
+      if (status === 'success') {
+        Notification.requestPermission().then(function (permission) {
+          if (permission === 'granted') {
+            new Notification(res.data?.message);
+          }
+        });
+      }
+    } catch (e) {
+      setLoadingAdd(false);
+      console.log(e);
+      alert(e.message);
+    } finally {
+      setLoadingAdd(false);
+    }
+  }, [
+    auth,
+    dataDetail.episode_current,
+    dataDetail.name,
+    dataDetail.poster_url,
+    dataDetail.slug,
+    dataDetail.thumb_url,
+  ]);
   return (
     <>
       <div
@@ -83,7 +139,7 @@ function HeroDetail({ dataDetail, slug }) {
                 </div>
               )}
             </div>
-            <div className='mt-4  md:mt-4'>
+            <div className='mt-4 flex items-center text-center  md:mt-4'>
               {dataDetail?.episode_current === 'Trailer' ? (
                 <Link
                   onClick={() => handleClickScroll('trailer')}
@@ -108,6 +164,34 @@ function HeroDetail({ dataDetail, slug }) {
                   Xem phim
                 </Link>
               )}
+
+              <Popover content={content} trigger='hover' placement='right'>
+                <button
+                  data-popover-target='popover-default'
+                  type='button'
+                  className='w-8 h-8 rounded-full bg-red-600 mx-6'
+                  onClick={handleAddList}
+                >
+                  {loadingAdd ? (
+                    <Spinner aria-label='Default status example' />
+                  ) : (
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth={1.5}
+                      stroke='currentColor'
+                      className='w-8 h-8'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'
+                      />
+                    </svg>
+                  )}
+                </button>
+              </Popover>
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ import LoadingElement from './components/LoadingElement';
 import SignUp from './pages/Auth/signUp';
 import SignIn from './pages/Auth/signIn';
 import Profile from './pages/Profile';
+import ListMovieProfile from './pages/Profile/listMovie';
 const HomePage = lazy(() => import('./pages/Home/HomePage'));
 const DetailMovie = lazy(() => import('./pages/Detail/DetailMovie'));
 const ViewMovie = lazy(() => import('./pages/viewMovie'));
@@ -58,7 +59,8 @@ function App() {
             <Route path='/' element={<HomePage />} />
             <Route path='/sign-up' element={<SignUp />} />
             <Route path='/sign-in' element={<SignIn />} />
-            <Route path='/profile/:id' element={<Profile />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/profile/list' element={<ListMovieProfile />} />
 
             <Route path='/details/:slug' element={<DetailMovie />} />
             <Route path='/movie/:name/:slug' element={<ViewMovie />} />
