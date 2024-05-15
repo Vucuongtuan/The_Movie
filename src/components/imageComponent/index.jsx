@@ -1,6 +1,7 @@
 import React from 'react';
 import { BASE_IMAGE_URL_3 } from '../../services/movie.api';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 const ImageComponent = ({ resizeLayout, index, movie }) => {
   // const [imageUrl, setImageUrl] = useState(null);
 
@@ -60,8 +61,8 @@ const ImageComponent = ({ resizeLayout, index, movie }) => {
       alt={movie.name}
       loading='lazy'
       effect='opacity'
-      delayTime='300'
-      className='w-full object-cover   h-full group-hover:scale-110 transition-all duration-500'
+      delayMethod='throttle'
+      className='w-full object-cover   h-full group-hover:scale-110 transition-all duration-500 '
     />
   );
 };

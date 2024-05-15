@@ -53,3 +53,12 @@ export const deleteHistodyMovies = async (movie) => {
   const res = await axios.delete(`http://localhost:4000/history`, { movie });
   return res;
 };
+export const commentsMovie = async (data) => {
+  const res = await axios.post(`http://localhost:4000/chat/comments`, {
+    message: data.message,
+    commentId: data.commentId,
+    slug: data.slug,
+    idUser: data.idUser,
+  });
+  return res;
+};

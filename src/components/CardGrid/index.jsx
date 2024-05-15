@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import ImageComponent from '../imageComponent';
+import { Placeholder } from '../imageComponent/image';
+const ImageComponent = React.lazy(() => import('../imageComponent'));
 export default function CardGrid({ movie, index }) {
   const [resizeLayout, setResizeLayout] = useState(true);
   useEffect(() => {
@@ -24,7 +25,14 @@ export default function CardGrid({ movie, index }) {
         index === 0 ? 'col-span-3 row-span-2 md:row-span-2 md:col-span-2' : ''
       }`}
     >
-      <ImageComponent resizeLayout={resizeLayout} index={index} movie={movie} />
+      {' '}
+      <Suspense fallback={<Placeholder />}>
+        <ImageComponent
+          resizeLayout={resizeLayout}
+          index={index}
+          movie={movie}
+        />
+      </Suspense>
       {/* <img
         src={
           (resizeLayout

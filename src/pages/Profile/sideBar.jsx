@@ -15,13 +15,7 @@ export default function SideBar() {
           >
             Thông tin cá nhân
           </Link>
-          <Link
-            className={`hover:bg-red-600 font-semibold active:bg-red-700 mx-4 px-2 py-2 rounded-lg ${
-              location.pathname === `/profile` ? 'bg-red-600' : ''
-            }`}
-          >
-            Phim đã xem
-          </Link>
+
           <Link
             to={'/profile/list'}
             className={`hover:bg-red-600 font-semibold active:bg-red-700 mx-4 px-2 py-2 rounded-lg ${

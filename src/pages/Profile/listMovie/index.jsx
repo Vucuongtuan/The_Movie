@@ -69,8 +69,15 @@ export default function ListMovieProfile() {
                     </p>
                     <p className='text-sm'>
                       Giờ thêm :
-                      <span className='px-2 '>{`(${hours}:${minutes}:${seconds})`}</span>
+                      <span className='px-2 '>{`${hours + ' giờ'} ${
+                        minutes + ' phút'
+                      } ${seconds + ' giây'}`}</span>
                     </p>
+                    {localStorage.getItem(item.slug) && (
+                      <p className='text-sm'>
+                        Đang xem : {localStorage.getItem(item.slug)}
+                      </p>
+                    )}
                   </div>
                 </div>
               );

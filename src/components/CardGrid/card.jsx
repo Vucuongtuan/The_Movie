@@ -1,16 +1,21 @@
-import React from 'react';
-import Image from '../imageComponent/image';
+import React, { Suspense } from 'react';
+import { Placeholder } from '../imageComponent/image';
+// import Image from '../imageComponent/image';
 
+const Image = React.lazy(() => import('../imageComponent/image'));
 export default function Card({ data }) {
   return (
     <div className='w-full h-full rounded-md relative overflow-hidden group'>
-      <Image
-        resizeLayout={true}
-        movie={data}
-        className={
-          'w-full h-full group-hover:scale-110 transition-all duration-500'
-        }
-      />
+      <Suspense fallback={<Placeholder />}>
+        <Image
+          resizeLayout={true}
+          movie={data}
+          className={
+            'w-full h-full group-hover:scale-110 transition-all duration-500'
+          }
+        />
+      </Suspense>
+
       <div className='w-full h-full flex justify-between items-center px-2 py-1 bg-gradient-to-t from-black via-[rgba(0, 0, 0, .39)] to-transparent  absolute bottom-0 left-0'>
         <div className='h-[25%] max-h-[50%] absolute bottom-0 left w-full'>
           <h3

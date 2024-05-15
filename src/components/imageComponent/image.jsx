@@ -1,6 +1,7 @@
 import React from 'react';
 import { BASE_IMAGE_URL_3 } from '../../services/movie.api';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import LoadingLayout from '../LoadingElement/loadingLayout';
 const Image = ({ resizeLayout, movie, className }) => {
   return (
     <LazyLoadImage
@@ -19,6 +20,7 @@ const Image = ({ resizeLayout, movie, className }) => {
 };
 
 export default Image;
+export const Placeholder = () => <LoadingLayout />;
 // useEffect(() => {
 //   const loadImage = async () => {
 //     try {

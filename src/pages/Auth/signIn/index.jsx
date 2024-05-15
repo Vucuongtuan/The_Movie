@@ -19,7 +19,9 @@ export default function SignIn() {
     setIsLoading(true);
     try {
       const res = await LoginAccount(data);
-
+      console.log('====================================');
+      console.log(res);
+      console.log('====================================');
       if (res && res.data && res.data.status === 'success') {
         setIsLoading(false);
         const dataa = {
@@ -27,6 +29,7 @@ export default function SignIn() {
           name: res.data.name,
           id: res.data.id,
         };
+
         Cookies.set('token', res.data.token, { expires: res.data.expiresIn });
         localStorage.setItem('dataUser', JSON.stringify(dataa));
         navigate('/');
@@ -34,6 +37,7 @@ export default function SignIn() {
         setIsLoading(false);
       }
     } catch (error) {
+      alert(error.response.data.message);
       console.error('Login error:', error);
     } finally {
       setIsLoading(false);
