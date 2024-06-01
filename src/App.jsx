@@ -1,9 +1,8 @@
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import { Header, Footer } from './components';
 import GlobalStyle from './components/GlobalStyle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Cookies from 'js-cookie';
 import { Suspense, lazy, useEffect, useState } from 'react';
 import LoadingElement from './components/LoadingElement';
 import SignUp from './pages/Auth/signUp';

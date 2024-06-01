@@ -2,50 +2,39 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <div className='h-[160px] w-full bg-[#040404] border-t-[1px]  z-50'>
-      <div className='flex justify-start items-center w-[90%] h-full m-auto py-2'>
-        <div className='flex items-center h-1/3 w-1/4 '>
-          <img src='/logoTC.png' alt='' className='h-full' />
+    <div className='h-[70px] w-full bg-[#040404] border-t-[1px]  z-50'>
+      <div className='flex justify-between items-center w-[90%] h-full m-auto md:w-full'>
+        <div className='flex items-center h-1/3 w-1/4 se:w-[180px] px-8'>
+          <img
+            src='/logoTC.png'
+            alt=''
+            className='h-[50px] w-[200px] object-cover se:w-full se:h-full'
+          />
         </div>
-        <div className='flex-grow flex flex-row h-full space-x-24'>
-          <div className=' space-y-2'>
-            <h3 className='text-lg font-medium'>Giới thiệu</h3>
-            <p className='text-[#ccccc1]'>
-              <Link to={'/'} className='text-[#ccccc1]'>
-                Trang chủ
-              </Link>
-            </p>
-          </div>
-          <div className=' space-y-2'>
-            <h3 className='text-lg font-medium'>Liên hế</h3>
-            <p className='text-[#ccccc1]'>
-              <span>none</span>
-            </p>
-          </div>
-          <div className=' space-y-2'>
-            <h3 className='text-lg font-medium'>Các trang</h3>
-            <div className='grid grid-cols-2 space-x-3 text-left'>
-              <p className='text-[#ccccc1]'>
-                <Link to={'/'} className='text-[#ccccc1]'>
-                  Trang chủ
-                </Link>
-              </p>
-              <p className='text-[#ccccc1]'>
-                <Link to={'/phim-bo'} className='text-[#ccccc1] text-left'>
-                  Phim bộ
-                </Link>
-              </p>
-              <p className='text-[#ccccc1]'>
-                <Link to={'/phim-le'} className='text-[#ccccc1]'>
-                  Phim lẻ
-                </Link>
-              </p>
-              <p className='text-[#ccccc1]'>
-                <Link to={'/hoat-hinh'} className='text-[#ccccc1]'>
-                  Hoạt hình
-                </Link>
-              </p>
-            </div>
+        <div className='flex-grow flex justify-end items-center h-full '>
+          <div className=' space-x-4 se:space-x-2 se:pr-1'>
+            <Link to={'/'} className='text-[#ccccc1] se:text-[0.7rem]'>
+              Trang chủ
+            </Link>
+
+            <Link to={'/'} className='text-[#ccccc1] se:text-[0.7rem]'>
+              Trang chủ
+            </Link>
+            <Link
+              to={'/phim-bo'}
+              className='text-[#ccccc1] se:text-[0.7rem] text-left'
+            >
+              Phim bộ
+            </Link>
+            <Link to={'/phim-le'} className='text-[#ccccc1] se:text-[0.7rem]'>
+              Phim lẻ
+            </Link>
+            <Link
+              to={'/hoat-hinh'}
+              className='text-[#ccccc1] se:text-[0.7rem] '
+            >
+              Hoạt hình
+            </Link>
           </div>
         </div>
       </div>

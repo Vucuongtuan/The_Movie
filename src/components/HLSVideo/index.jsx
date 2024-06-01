@@ -1,28 +1,38 @@
 import React, { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
 
-const VideoPlayer = ({ src }) => {
+const VideoPlayer = ({ videoUrl }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
+    let hls;
     if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(src);
+      hls = new Hls();
+      hls.loadSource(videoUrl);
       hls.attachMedia(videoRef.current);
-    } else {
-      videoRef.current.src = src;
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        videoRef.current.play();
+      });
+    } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
+      videoRef.current.src = videoUrl;
+      videoRef.current.addEventListener('loadedmetadata', () => {
+        videoRef.current.play();
+      });
     }
-  }, [src]);
+
+    return () => {
+      if (hls) {
+        hls.destroy();
+      }
+    };
+  }, [videoUrl]);
 
   return (
     <video
       ref={videoRef}
-      width='960'
-      height='540'
       controls
-      className='w-full h-full'
-    />
+      style={{ width: '100%', height: 'auto' }}
+    ></video>
   );
 };
-
 export default VideoPlayer;

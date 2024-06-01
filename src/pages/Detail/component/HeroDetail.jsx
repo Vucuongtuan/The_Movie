@@ -56,7 +56,7 @@ function HeroDetail({ dataDetail, slug }) {
         thumb_url: dataDetail.thumb_url,
         poster_url: dataDetail.poster_url,
       };
-      const res = await addListMovies(local.id, movie);
+      const res = await addListMovies(local.email, movie);
       const status = res?.data?.status;
       if (status === 'success') {
         Notification.requestPermission().then(function (permission) {

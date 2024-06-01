@@ -6,6 +6,7 @@ import { getDetailMovie } from '../../services/movie.api';
 import VideoPlayer from '../../components/HLSVideo';
 import LoadingElement from '../../components/LoadingElement';
 import ErrorElement from '../../components/Error';
+import Comment from './components/comment';
 
 export default function ViewMovie() {
   const [linkMovie, setLinkMovie] = useState([]);
@@ -23,11 +24,10 @@ export default function ViewMovie() {
         const serverData = res?.data.data?.item?.episodes[0]?.server_data;
         let link;
         setDataMovie(res?.data);
-
         if (slug === 'full') {
           link = serverData[0];
         } else {
-          const tapp = parseInt(slug.split('-')[1]?.trim());
+          const tapp = slug.split('-')[1]?.trim();
           if (serverData) {
             for (let i = 0; i < serverData.length; i++) {
               if (parseInt(serverData[i].slug) === tapp) {
@@ -37,8 +37,7 @@ export default function ViewMovie() {
             }
           }
         }
-        console.log(link);
-        setLinkMovie([link.link_embed, 'link_embed']);
+        setLinkMovie([link?.link_embed, 'link_embed']);
       } catch (err) {
         console.log(err);
         setIsLoading(false);
@@ -50,7 +49,9 @@ export default function ViewMovie() {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug, name]);
-
+  console.log('====================================');
+  console.log(linkMovie[0]);
+  console.log('====================================');
   const elementVideo = () => {
     if (linkMovie[1] === 'link_embed') {
       return <LinkMovie linkMovie={linkMovie[0]} />;
@@ -78,6 +79,13 @@ export default function ViewMovie() {
   if (isError) {
     return <ErrorElement />;
   }
+  console.log('Tap====================================');
+  console.log(
+    dataMovie?.data?.item?.episodes[0]?.server_data.find(
+      (episode) => parseInt(episode.slug) === tap,
+    ).link,
+  );
+  console.log('====================================');
   return (
     <main className=' m-auto mb-4 px-[8rem] 2xl:px-[5rem] xl:px-[4rem] lg:px-[3rem] md:px-[1rem]'>
       <Breadcrumb aria-label='Default breadcrumb example' className='py-2'>
@@ -104,9 +112,9 @@ export default function ViewMovie() {
               <Button
                 onClick={() => {
                   setLinkMovie([
-                    dataMovie?.data?.item?.episodes[0]?.server_data[
-                      tap - 1 || 0
-                    ].link_embed,
+                    dataMovie?.data?.item?.episodes[0]?.server_data.find(
+                      (episode) => parseInt(episode.slug) === tap,
+                    ).link_embed,
                     'link_embed',
                   ]);
                 }}
@@ -123,10 +131,17 @@ export default function ViewMovie() {
               </Button>
               <Button
                 onClick={() => {
+                  console.log('link====================================');
+                  console.log(
+                    dataMovie?.data?.item?.episodes[0]?.server_data.find(
+                      (episode) => parseInt(episode.slug) === tap,
+                    ).link_m3u8,
+                  );
+                  console.log('====================================');
                   setLinkMovie([
-                    dataMovie?.data?.item?.episodes[0]?.server_data[
-                      tap - 1 || 0
-                    ].link_m3u8,
+                    dataMovie?.data?.item?.episodes[0]?.server_data.find(
+                      (episode) => parseInt(episode.slug) === tap,
+                    ).link_m3u8,
                     'link_m3u8',
                   ]);
                 }}
@@ -186,6 +201,7 @@ export default function ViewMovie() {
           )}
         </div>
       </section>
+      <Comment slug={slug} />
     </main>
   );
 }

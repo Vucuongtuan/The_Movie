@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ProfileLayout from '../layout';
-import { getListMovies } from '../../../services/auth';
+import { deleteListMovies, getListMovies } from '../../../services/auth';
 import { BASE_IMAGE_URL_3 } from '../../../services/movie.api';
+import { Link } from 'react-router-dom';
 
 export default function ListMovieProfile() {
   const local = JSON.parse(localStorage.getItem('dataUser'));
@@ -12,9 +13,8 @@ export default function ListMovieProfile() {
     const getData = async () => {
       setLoading(true);
       try {
-        const res = await getListMovies(local.id);
+        const res = await getListMovies(local.email);
         if (res.data.status === 'failed') {
-          alert(res.data.message);
           setLoading(false);
           return;
         }
@@ -28,6 +28,19 @@ export default function ListMovieProfile() {
       }
     };
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const handleremoveMovie = useCallback(async (email, slug) => {
+    const data = {
+      email: email,
+      slug: slug,
+    };
+    const res = await deleteListMovies(data);
+    if (res.data.status === 'success') {
+      alert('Đã xóa thành công');
+    } else {
+      alert('Xóa thất bại thử lại sau');
+    }
   }, []);
   return (
     <ProfileLayout>
@@ -51,34 +64,47 @@ export default function ListMovieProfile() {
               const seconds = dateObject.getSeconds();
               const formattedDate = `${day}/${month}/${year} `;
               return (
-                <div className='flex w-[500px] group' key={item.slug}>
-                  <div className='h-full w-[40%]   rounded-md overflow-hidden'>
-                    <img
-                      src={BASE_IMAGE_URL_3 + item.thumb_url}
-                      alt={item.name}
-                      className='h-full  transition-transform duration-300 transform group:scale-110'
-                    />
-                  </div>
-                  <div className='w-[60%] px-2'>
-                    <h4 className=' font-semibold text-lg'>{item.name}</h4>
-                    <p className='text-sm'>
-                      Tập :<span className='px-2 '>{item.tap}</span>
-                    </p>
-                    <p className='text-sm'>
-                      Ngày thêm :<span className='px-2 '>{formattedDate}</span>
-                    </p>
-                    <p className='text-sm'>
-                      Giờ thêm :
-                      <span className='px-2 '>{`${hours + ' giờ'} ${
-                        minutes + ' phút'
-                      } ${seconds + ' giây'}`}</span>
-                    </p>
-                    {localStorage.getItem(item.slug) && (
+                <div
+                  className=' w-[500px] group bg-[#252323ee] rounded-lg relative'
+                  key={item.slug}
+                >
+                  <Link to={`/details/${item.slug}`} className='flex'>
+                    <div className='h-full w-[40%] rounded-s-xl overflow-hidden'>
+                      <img
+                        src={BASE_IMAGE_URL_3 + item.thumb_url}
+                        alt={item.name}
+                        className='h-full  transition-transform duration-300 transform group:scale-110'
+                      />
+                    </div>
+                    <div className='w-[60%] px-2'>
+                      <h4 className=' font-semibold text-lg'>{item.name}</h4>
                       <p className='text-sm'>
-                        Đang xem : {localStorage.getItem(item.slug)}
+                        Tập :<span className='px-2 '>{item.tap}</span>
                       </p>
-                    )}
-                  </div>
+                      <p className='text-sm'>
+                        Ngày thêm :
+                        <span className='px-2 '>{formattedDate}</span>
+                      </p>
+                      <p className='text-sm'>
+                        Giờ thêm :
+                        <span className='px-2 '>{`${hours + ' giờ'} ${
+                          minutes + ' phút'
+                        } ${seconds + ' giây'}`}</span>
+                      </p>
+                      {localStorage.getItem(item.slug) && (
+                        <p className='text-sm'>
+                          Đang xem : {localStorage.getItem(item.slug)}
+                        </p>
+                      )}
+                    </div>
+                  </Link>
+                  <button
+                    title='Xóa phim khỏi danh sách'
+                    className='bg-red-600 border-none  font-bold absolute bottom-2 right-2 px-6 rounded-lg border-2'
+                    onClick={() => handleremoveMovie(data.email, item.slug)}
+                  >
+                    Xóa
+                  </button>
                 </div>
               );
             })

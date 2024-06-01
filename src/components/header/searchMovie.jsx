@@ -101,7 +101,11 @@ export default function SearchMovie() {
           </ul>
         )}
       </div>
-      {/* {!inputClicked ? (
+    </div>
+  );
+}
+{
+  /* {!inputClicked ? (
         <></>
       ) : loading ? (
         <div className=' rounded-sm absolute items-start z-40 top-14 w-[350px] text-xl leading-[100px] h-[50px] text-center  bg-[#1e1e1e]  transition-all duration-500'>
@@ -151,7 +155,5 @@ export default function SearchMovie() {
               ))}
           </ul>
         </div>
-      )} */}
-    </div>
-  );
+      )} */
 }
